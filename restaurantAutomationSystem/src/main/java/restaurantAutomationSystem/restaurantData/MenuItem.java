@@ -5,10 +5,6 @@ import java.math.RoundingMode;
 
 public class MenuItem {
 
-	public static final int APPETIZERS = 0;
-	public static final int MAIN_DISH = 1;
-	public static final int DESSERT = 2;
-	public static final int DRINK=3;
 	private String description;
 	private int orderNumber;
 	private BigDecimal price;
@@ -42,7 +38,6 @@ public class MenuItem {
 		this.category=mealCategory;
 	}
 	
-	
 	public MenuItem(MenuItem itemToCopy)
 	{
 		this.description=itemToCopy.getDescription();
@@ -66,29 +61,24 @@ public class MenuItem {
 		return this.price.toString();
 	}
 	
-	public String getCategory()
+	public void setCategoryNames()
 	{
-		if(this.category == APPETIZERS)
+		
+	}
+	
+	public int getCategory()
+	throws IllegalStateException
+	{
+		if(this.category < 4)
 		{
-			return "Appetizer";
-		}
-		else if(this.category == MAIN_DISH)
-		{
-			return "Main Dish";
-		}
-		else if(this.category == DESSERT)
-		{
-			return "Dessert";
-		}
-		else if(this.category == DRINK)
-		{
-			return "Drink";
+			return this.category;
 		}
 		else
 		{
-			return "Unknown Category";
+			throw new IllegalStateException("The menu item is not set to a known category");
 		}
 	}
+	
 	
 	public String toString()
 	{

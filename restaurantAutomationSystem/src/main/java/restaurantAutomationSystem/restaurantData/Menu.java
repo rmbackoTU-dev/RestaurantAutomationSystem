@@ -1,15 +1,23 @@
 package restaurantAutomationSystem.restaurantData;
 
-public class Menu {
+public class Menu implements MenuData{
 
 	private MenuItem[] menuList;
 	private int menuSize=10;
 	private int firstEmptyIndex=0;
+	private String[] menuCategories;
+	private int menuCategorySize;
 	
 	
 	public Menu()
 	{
 		menuList=new MenuItem[menuSize];
+		menuCategorySize=4;
+		menuCategories=new String[menuCategorySize];
+		menuCategories[0]="Appetizers";
+		menuCategories[1]="Main Dish";
+		menuCategories[2]="Dessert";
+		menuCategories[3]="Drinks";
 	}
 	
 	public Menu(int menuSize)
@@ -21,6 +29,12 @@ public class Menu {
 		}
 		this.menuSize=menuSize;
 		menuList=new MenuItem[menuSize];
+		menuCategorySize=4;
+		menuCategories=new String[menuCategorySize];
+		menuCategories[0]="Appetizers";
+		menuCategories[1]="Main Dish";
+		menuCategories[2]="Dessert";
+		menuCategories[3]="Drinks";
 	}
 	
 	/**
@@ -50,7 +64,39 @@ public class Menu {
 				this.firstEmptyIndex=this.firstEmptyIndex+1;
 			}
 		}
+		
+		if(menuToCopy.getMenuCategorySize() == 0)
+		{
+			this.menuCategorySize=0;
+			this.menuCategories=new String[menuCategorySize];
+		}
+		else
+		{
+			String[] tempMenuCategories=menuToCopy.getCategories();
+			this.menuCategorySize=menuToCopy.getMenuCategorySize();
+			for(int i=0; i < menuToCopy.getMenuCategorySize(); i++)
+			{
+				this.menuCategories[i]=tempMenuCategories[i];
+			}
+		}
 	}
+	
+	public int getMenuCategorySize()
+	{
+		return this.menuCategorySize;
+	}
+	
+	public String[] getCategories()
+	{
+		return this.menuCategories;
+	}
+	
+	public void setCategories(String[] categories)
+	{
+		this.menuCategories=categories;
+		this.menuSize=categories.length;
+	}
+	
 	
 	public int size()
 	{
@@ -61,6 +107,7 @@ public class Menu {
 	 * Adds an item to the menuList
 	 * @param item
 	 */
+	@Override
 	public void addMenuItem(MenuItem item)
 	throws NullPointerException
 	{
@@ -102,6 +149,7 @@ public class Menu {
 	 * If the item is the last item delete,
 	 * if the item is a middle item move all the indexes up by 1
 	 */
+	@Override
 	public void deleteMenuItem(RestaurantIterator itemIter)
 	{
 		int indexOfItemToRemove=itemIter.getCurrentIndex();
@@ -200,6 +248,7 @@ public class Menu {
 	 * @param orderNumber
 	 * @return true if found, otherwise false
 	 */
+	@Override
 	public boolean isOrderInMenu(int orderNumber)
 	{
 		RestaurantIterator searchIterator=this.getAllItemsIterator();
@@ -216,42 +265,23 @@ public class Menu {
 		return found;
 	}
 	
+	
 	@Override
 	public String toString()
 	{
 		String menuString="\t\tMENU\t\t\n\n\n";
 		MenuItem currentItem;
-		//Set initial category to appetizer than change the categories
-		ItemIterator menuCategoryIterator=new ItemIterator(this, MenuItem.APPETIZERS);
-		menuString=menuString+"Appetizers: \n\n\n";
-		while(menuCategoryIterator.hasNext())
+		//Loop through each category as currently set and print out the items listed under that category.
+		ItemIterator menuCategoryIterator;
+		for(int n=0; n< this.menuCategorySize; n++)
 		{
-			currentItem=(MenuItem) menuCategoryIterator.next();
-			menuString=menuString+"\t"+currentItem.toString()+"\n\n";
-		}
-		menuCategoryIterator.setCategory(MenuItem.MAIN_DISH);
-		menuCategoryIterator.resetIter();
-		menuString=menuString+"\nMain Dishes: \n\n\n";
-		while(menuCategoryIterator.hasNext())
-		{
-			currentItem=(MenuItem) menuCategoryIterator.next();
-			menuString=menuString+"\t"+currentItem.toString()+"\n\n";
-		}
-		menuCategoryIterator.setCategory(MenuItem.DESSERT);
-		menuCategoryIterator.resetIter();
-		menuString=menuString+"\nDesserts: \n\n\n";
-		while(menuCategoryIterator.hasNext())
-		{
-			currentItem=(MenuItem) menuCategoryIterator.next();
-			menuString=menuString+"\t"+currentItem.toString()+"\n\n";
-		}
-		menuCategoryIterator.setCategory(MenuItem.DRINK);
-		menuCategoryIterator.resetIter();
-		menuString=menuString+"\nDrinks: \n\n\n";
-		while(menuCategoryIterator.hasNext())
-		{
-			currentItem=(MenuItem) menuCategoryIterator.next();
-			menuString=menuString+"\t"+currentItem.toString()+"\n\n";
+			menuCategoryIterator=new ItemIterator(this, n);
+			menuString=menuString+this.menuCategories[n]+": \n\n\n";
+			while(menuCategoryIterator.hasNext())
+			{
+				currentItem=(MenuItem) menuCategoryIterator.next();
+				menuString=menuString+"\t"+currentItem.toString()+"\n\n";
+			}
 		}
 		return menuString;
 	}
@@ -373,4 +403,5 @@ public class Menu {
 			this.currentItem=null;
 		}
 	}
+
 }

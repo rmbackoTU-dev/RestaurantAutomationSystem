@@ -6,80 +6,29 @@ class ItemIterator implements RestaurantIterator {
 
 	private int currentIndex=-1;
 	private MenuItem currentItem;
-	private String stringCategory;
+	private int categoryNum;
 	
 	public ItemIterator(Menu currentMenu, int category)
 	{
 		itemIterator=currentMenu.getAllItemsIterator();
 		//Do check to make sure category is one of our categories
-		if(category == MenuItem.APPETIZERS)
+		if(category < 4 )
 		{
-			this.stringCategory="Appetizer";
-		}
-		else if(category == MenuItem.MAIN_DISH)
-		{
-			this.stringCategory="Main Dish";
-		}
-		else if(category == MenuItem.DESSERT)
-		{
-			this.stringCategory="Dessert";
-		}
-		else if(category == MenuItem.DRINK)
-		{
-			this.stringCategory ="Drink";
+			this.categoryNum=category;
 		}
 		else
 		{
 			throw new IllegalArgumentException("A valid category was not passed");
 		}
 		this.currentItem=null;
-//		if((this.itemIterator.getItem().getCategoryName() == this.stringCategory))
-//		{
-//			this.currentItem=this.itemIterator.getItem();
-//			this.currentIndex=this.itemIterator.getCurrentIndex();
-//		}
-//		else
-//		{
-//			boolean foundFirst=false;
-//			while(itemIterator.hasNext() && !foundFirst)
-//			{
-//				if((itemIterator.getItem().getCategoryName() == this.stringCategory))
-//				{
-//						this.currentItem=itemIterator.getItem();
-//						this.currentIndex=this.itemIterator.getCurrentIndex();
-//						foundFirst=true;
-//				}
-//				else
-//				{
-//					itemIterator.next();
-//				}
-//			}
-//		}
-//		if(currentItem == null)
-//		{
-//				throw new IllegalStateException("current Item Is Not Set");
-//		}
-		
 	}
 	
 	public void setCategory(int category)
 	{
 		//Do check to make sure category is one of our categories
-		if(category == MenuItem.APPETIZERS)
+		if(category < 4)
 		{
-			this.stringCategory="Appetizer";
-		}
-		else if(category == MenuItem.MAIN_DISH)
-		{
-			this.stringCategory="Main Dish";
-		}
-		else if(category == MenuItem.DESSERT)
-		{
-			this.stringCategory="Dessert";
-		}
-		else if(category == MenuItem.DRINK)
-		{
-			this.stringCategory ="Drink";
+			this.categoryNum=category;
 		}
 		else
 		{
@@ -101,7 +50,7 @@ class ItemIterator implements RestaurantIterator {
 			//provides look ahead without changing state.
 			this.currentIndex=this.currentIndex+1;
 			localCurrentItem=(MenuItem) this.itemIterator.next();
-			if(localCurrentItem.getCategory() == this.stringCategory)
+			if(localCurrentItem.getCategory() == this.categoryNum)
 			{
 				itemIterHasNext=true;
 				this.currentItem=localCurrentItem;
@@ -130,7 +79,7 @@ class ItemIterator implements RestaurantIterator {
 			tempItem=(MenuItem) this.itemIterator.next();
 			tempIndex=this.itemIterator.getCurrentIndex();
 			
-			if(tempItem.getCategory() == this.stringCategory)
+			if(tempItem.getCategory() == this.categoryNum)
 			{
 				this.currentItem=tempItem;
 				foundNext=true;
