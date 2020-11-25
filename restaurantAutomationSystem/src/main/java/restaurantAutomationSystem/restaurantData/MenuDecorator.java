@@ -3,7 +3,7 @@ package restaurantAutomationSystem.restaurantData;
 
 public abstract class MenuDecorator implements MenuData {
 
-	protected Menu baseMenu;
+	private Menu baseMenu;
 	
 	/**
 	 * Default Constructor
@@ -27,6 +27,11 @@ public abstract class MenuDecorator implements MenuData {
 	public MenuDecorator(Menu menuToCopy)
 	{
 		baseMenu=new Menu(menuToCopy);
+	}
+	
+	public Menu getMenu()
+	{
+		return this.baseMenu;
 	}
 	
 	@Override
@@ -53,10 +58,10 @@ public abstract class MenuDecorator implements MenuData {
 		return this.baseMenu.isOrderInMenu(orderNumber);
 	}
 	
-	public void updateCategories(String[] categories)
-	{
-		this.baseMenu.setCategories(categories);
-	}
+//	public void updateCategories(String[] categories)
+//	{
+//		this.baseMenu.setCategories(categories);
+//	}
 	
 	
 }

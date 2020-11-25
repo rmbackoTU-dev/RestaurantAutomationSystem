@@ -18,7 +18,6 @@ public class CategoryHeaders extends MenuDecorator {
 		this.categories=categories;
 		this.categorySize=this.categories.length;
 		this.firstEmpty=categorySize+1;
-		this.update();
 	}
 	
 	public String[] getCategories()
@@ -33,7 +32,6 @@ public class CategoryHeaders extends MenuDecorator {
 		{
 			this.categories[categoryNum]=category;
 		}
-		this.update();
 	}
 	
 	public void addCategory(String category)
@@ -66,7 +64,6 @@ public class CategoryHeaders extends MenuDecorator {
 			this.categories[this.firstEmpty]=category;
 			this.firstEmpty=firstEmpty+1;
 		}
-		this.update();
 	}
 	
 	public void removeCategory(int indexOfCategory)
@@ -98,13 +95,26 @@ public class CategoryHeaders extends MenuDecorator {
 		    	
 		    }	
 		}
-		this.update();
 	}
 	
-	
-	private void update()
+	@Override
+	public String toString()
 	{
-		super.updateCategories(this.categories);
+		Menu baseMenu=super.getMenu();
+		String menuString="\t\tMENU\t\t\n\n\n";
+		RestaurantIterator itemIter;
+		MenuItem currentItem;
+		for(int n=0; n< this.categorySize; n++)
+		{
+			itemIter=baseMenu.getItemIterator(n);
+			menuString=menuString+this.categories[n]+": \n\n\n";
+			while(itemIter.hasNext())
+			{
+				currentItem=(MenuItem) itemIter.next();
+				menuString=menuString+"\t"+currentItem.toString()+"\n\n";
+			}
+		}
+		return menuString;
 	}
 	
 

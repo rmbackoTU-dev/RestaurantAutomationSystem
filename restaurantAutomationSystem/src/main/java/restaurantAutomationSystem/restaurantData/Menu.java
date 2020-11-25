@@ -5,19 +5,19 @@ public class Menu implements MenuData{
 	private MenuItem[] menuList;
 	private int menuSize=10;
 	private int firstEmptyIndex=0;
-	private String[] menuCategories;
-	private int menuCategorySize;
+//	private String[] menuCategories;
+//	private int menuCategorySize;
 	
 	
 	public Menu()
 	{
 		menuList=new MenuItem[menuSize];
-		menuCategorySize=4;
-		menuCategories=new String[menuCategorySize];
-		menuCategories[0]="Appetizers";
-		menuCategories[1]="Main Dish";
-		menuCategories[2]="Dessert";
-		menuCategories[3]="Drinks";
+//		menuCategorySize=4;
+//		menuCategories=new String[menuCategorySize];
+//		menuCategories[0]="Appetizers";
+//		menuCategories[1]="Main Dish";
+//		menuCategories[2]="Dessert";
+//		menuCategories[3]="Drinks";
 	}
 	
 	public Menu(int menuSize)
@@ -29,12 +29,12 @@ public class Menu implements MenuData{
 		}
 		this.menuSize=menuSize;
 		menuList=new MenuItem[menuSize];
-		menuCategorySize=4;
-		menuCategories=new String[menuCategorySize];
-		menuCategories[0]="Appetizers";
-		menuCategories[1]="Main Dish";
-		menuCategories[2]="Dessert";
-		menuCategories[3]="Drinks";
+//		menuCategorySize=4;
+//		menuCategories=new String[menuCategorySize];
+//		menuCategories[0]="Appetizers";
+//		menuCategories[1]="Main Dish";
+//		menuCategories[2]="Dessert";
+//		menuCategories[3]="Drinks";
 	}
 	
 	/**
@@ -65,37 +65,37 @@ public class Menu implements MenuData{
 			}
 		}
 		
-		if(menuToCopy.getMenuCategorySize() == 0)
-		{
-			this.menuCategorySize=0;
-			this.menuCategories=new String[menuCategorySize];
-		}
-		else
-		{
-			String[] tempMenuCategories=menuToCopy.getCategories();
-			this.menuCategorySize=menuToCopy.getMenuCategorySize();
-			for(int i=0; i < menuToCopy.getMenuCategorySize(); i++)
-			{
-				this.menuCategories[i]=tempMenuCategories[i];
-			}
-		}
+//		if(menuToCopy.getMenuCategorySize() == 0)
+//		{
+//			this.menuCategorySize=0;
+//			this.menuCategories=new String[menuCategorySize];
+//		}
+//		else
+//		{
+//			String[] tempMenuCategories=menuToCopy.getCategories();
+//			this.menuCategorySize=menuToCopy.getMenuCategorySize();
+//			for(int i=0; i < menuToCopy.getMenuCategorySize(); i++)
+//			{
+//				this.menuCategories[i]=tempMenuCategories[i];
+//			}
+//		}
 	}
 	
-	public int getMenuCategorySize()
-	{
-		return this.menuCategorySize;
-	}
-	
-	public String[] getCategories()
-	{
-		return this.menuCategories;
-	}
-	
-	public void setCategories(String[] categories)
-	{
-		this.menuCategories=categories;
-		this.menuSize=categories.length;
-	}
+//	public int getMenuCategorySize()
+//	{
+//		return this.menuCategorySize;
+//	}
+//	
+//	public String[] getCategories()
+//	{
+//		return this.menuCategories;
+//	}
+//	
+//	public void setCategories(String[] categories)
+//	{
+//		this.menuCategories=categories;
+//		this.menuSize=categories.length;
+//	}
 	
 	
 	public int size()
@@ -271,18 +271,25 @@ public class Menu implements MenuData{
 	{
 		String menuString="\t\tMENU\t\t\n\n\n";
 		MenuItem currentItem;
-		//Loop through each category as currently set and print out the items listed under that category.
-		ItemIterator menuCategoryIterator;
-		for(int n=0; n< this.menuCategorySize; n++)
+		RestaurantIterator iter=this.getAllItemsIterator();
+		while(iter.hasNext())
 		{
-			menuCategoryIterator=new ItemIterator(this, n);
-			menuString=menuString+this.menuCategories[n]+": \n\n\n";
-			while(menuCategoryIterator.hasNext())
-			{
-				currentItem=(MenuItem) menuCategoryIterator.next();
-				menuString=menuString+"\t"+currentItem.toString()+"\n\n";
-			}
+			currentItem=(MenuItem) iter.next();
+			menuString=menuString+"\t\t"+currentItem.toString()+"\n";
 		}
+		
+		//Loop through each category as currently set and print out the items listed under that category.
+//		ItemIterator menuCategoryIterator;
+//		for(int n=0; n< this.menuCategorySize; n++)
+//		{
+//			menuCategoryIterator=new ItemIterator(this, n);
+//			menuString=menuString+this.menuCategories[n]+": \n\n\n";
+//			while(menuCategoryIterator.hasNext())
+//			{
+//				currentItem=(MenuItem) menuCategoryIterator.next();
+//				menuString=menuString+"\t"+currentItem.toString()+"\n\n";
+//			}
+//		}
 		return menuString;
 	}
 	
