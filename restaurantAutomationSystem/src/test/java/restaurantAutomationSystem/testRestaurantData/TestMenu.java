@@ -1,8 +1,8 @@
 package restaurantAutomationSystem.testRestaurantData;
 
-import restaurantAutomationSystem.restaurantData.RestaurantIterator;
-import restaurantAutomationSystem.restaurantData.Menu;
-import restaurantAutomationSystem.restaurantData.MenuItem;
+import restaurantAutomationSystem.model.restaurantData.Menu;
+import restaurantAutomationSystem.model.restaurantData.MenuItem;
+import restaurantAutomationSystem.model.restaurantData.RestaurantIterator;
 
 import org.junit.jupiter.api.Test;
 import org.junit.Assert;

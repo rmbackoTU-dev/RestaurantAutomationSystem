@@ -2,13 +2,14 @@ package restaurantAutomationSystem.testCommands;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
-import restaurantAutomationSystem.restaurantData.Aggregator;
-import restaurantAutomationSystem.restaurantData.Menu;
-import restaurantAutomationSystem.restaurantData.Order;
-import restaurantAutomationSystem.restaurantData.MenuItem;
-import restaurantAutomationSystem.restaurantData.OrderItem;
-import restaurantAutomationSystem.restaurantData.Tab;
+
 import restaurantAutomationSystem.commandInvokers.exceptions.CommandErrorException;
+import restaurantAutomationSystem.model.restaurantData.Aggregator;
+import restaurantAutomationSystem.model.restaurantData.Menu;
+import restaurantAutomationSystem.model.restaurantData.MenuItem;
+import restaurantAutomationSystem.model.restaurantData.Order;
+import restaurantAutomationSystem.model.restaurantData.OrderItem;
+import restaurantAutomationSystem.model.restaurantData.Tab;
 import restaurantAutomationSystem.commandInvokers.GetTabCommand;
 import restaurantAutomationSystem.commandInvokers.RestaurantCommandInterface;
 
@@ -54,7 +55,7 @@ public class TestGetTabCommand {
 		{
 			Tab aggregatorTab=(Tab) getTabCmd.execute();
 			Assertions.assertEquals(TestGetTabCommand.SINGLE_ITEM_TAB, aggregatorTab.toString());
-			Assertions.assertEquals(1.99, aggregatorTab.getTabTotal().doubleValue());
+			Assertions.assertEquals(1.99, aggregatorTab.getTotalTotal().doubleValue());
 		}
 		catch(CommandErrorException cee)
 		{

@@ -1,4 +1,4 @@
-package restaurantAutomationSystem.restaurantData;
+package restaurantAutomationSystem.model.restaurantData;
 
 public class CategoryHeaders extends MenuDecorator {
 

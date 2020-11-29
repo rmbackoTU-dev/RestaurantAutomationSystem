@@ -1,13 +1,13 @@
 package restaurantAutomationSystem.controllers;
 
 import restaurantAutomationSystem.commandInvokers.exceptions.CommandErrorException;
+import restaurantAutomationSystem.model.restaurantData.Aggregator;
+import restaurantAutomationSystem.model.restaurantData.Menu;
+import restaurantAutomationSystem.model.restaurantData.MenuItem;
+import restaurantAutomationSystem.model.restaurantData.Order;
+import restaurantAutomationSystem.model.restaurantData.OrderItem;
+import restaurantAutomationSystem.model.restaurantData.Tab;
 import restaurantAutomationSystem.commandInvokers.Invoker;
-import restaurantAutomationSystem.restaurantData.Aggregator;
-import restaurantAutomationSystem.restaurantData.Menu;
-import restaurantAutomationSystem.restaurantData.Order;
-import restaurantAutomationSystem.restaurantData.Tab;
-import restaurantAutomationSystem.restaurantData.MenuItem;
-import restaurantAutomationSystem.restaurantData.OrderItem;
 
 public class SystemInterfaceController {
 	private static Aggregator systemData;

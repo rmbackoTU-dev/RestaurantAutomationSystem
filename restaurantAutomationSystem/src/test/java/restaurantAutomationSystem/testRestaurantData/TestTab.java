@@ -9,11 +9,11 @@ import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 
-import restaurantAutomationSystem.restaurantData.Menu;
-import restaurantAutomationSystem.restaurantData.MenuItem;
-import restaurantAutomationSystem.restaurantData.Order;
-import restaurantAutomationSystem.restaurantData.OrderItem;
-import restaurantAutomationSystem.restaurantData.Tab;
+import restaurantAutomationSystem.model.restaurantData.Menu;
+import restaurantAutomationSystem.model.restaurantData.MenuItem;
+import restaurantAutomationSystem.model.restaurantData.Order;
+import restaurantAutomationSystem.model.restaurantData.OrderItem;
+import restaurantAutomationSystem.model.restaurantData.Tab;
 
 public class TestTab {
 
@@ -196,7 +196,7 @@ public class TestTab {
 			Tab aTab=new Tab(aMenu, aOrder);
 			BigDecimal expectedPrice=new BigDecimal(10.97);
 			expectedPrice.setScale(2, RoundingMode.CEILING);
-			BigDecimal actualPrice=aTab.getTabTotal();
+			BigDecimal actualPrice=aTab.getTotalTotal();
 			double actualPriceDouble=actualPrice.doubleValue();
 			Assertions.assertEquals(expectedPrice.doubleValue(), actualPriceDouble);
 		}

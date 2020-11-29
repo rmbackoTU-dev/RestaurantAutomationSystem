@@ -1,10 +1,10 @@
 package restaurantAutomationSystem.commandInvokers;
 
 import restaurantAutomationSystem.commandInvokers.exceptions.CommandErrorException;
-import restaurantAutomationSystem.restaurantData.Order;
-import restaurantAutomationSystem.restaurantData.OrderItem;
-import restaurantAutomationSystem.restaurantData.Aggregator;
-import restaurantAutomationSystem.restaurantData.Menu;
+import restaurantAutomationSystem.model.restaurantData.Aggregator;
+import restaurantAutomationSystem.model.restaurantData.Menu;
+import restaurantAutomationSystem.model.restaurantData.Order;
+import restaurantAutomationSystem.model.restaurantData.OrderItem;
 
 public class PlaceOrderCommand implements RestaurantCommandInterface {
 

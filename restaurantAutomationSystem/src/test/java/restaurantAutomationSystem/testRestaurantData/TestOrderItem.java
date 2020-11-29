@@ -3,7 +3,7 @@ package restaurantAutomationSystem.testRestaurantData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import restaurantAutomationSystem.restaurantData.OrderItem;
+import restaurantAutomationSystem.model.restaurantData.OrderItem;
 
 public class TestOrderItem {
 

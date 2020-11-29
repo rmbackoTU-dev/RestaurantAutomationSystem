@@ -1,9 +1,9 @@
 package restaurantAutomationSystem.commandInvokers;
 
 import restaurantAutomationSystem.commandInvokers.exceptions.CommandErrorException;
-import restaurantAutomationSystem.restaurantData.Aggregator;
-import restaurantAutomationSystem.restaurantData.Menu;
-import restaurantAutomationSystem.restaurantData.Tab;
+import restaurantAutomationSystem.model.restaurantData.Aggregator;
+import restaurantAutomationSystem.model.restaurantData.Menu;
+import restaurantAutomationSystem.model.restaurantData.Tab;
 
 public class Invoker {
   private Aggregator agg;

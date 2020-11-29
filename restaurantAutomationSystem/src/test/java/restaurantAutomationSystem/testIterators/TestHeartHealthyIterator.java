@@ -5,9 +5,9 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import restaurantAutomationSystem.restaurantData.Menu;
-import restaurantAutomationSystem.restaurantData.MenuItem;
-import restaurantAutomationSystem.restaurantData.RestaurantIterator;
+import restaurantAutomationSystem.model.restaurantData.Menu;
+import restaurantAutomationSystem.model.restaurantData.MenuItem;
+import restaurantAutomationSystem.model.restaurantData.RestaurantIterator;
 
 public class TestHeartHealthyIterator {
 

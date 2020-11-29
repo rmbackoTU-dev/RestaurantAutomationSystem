@@ -1,4 +1,4 @@
-package restaurantAutomationSystem.restaurantData;
+package restaurantAutomationSystem.model.restaurantData;
 
 public interface MenuData {
 	
@@ -7,6 +7,8 @@ public interface MenuData {
 	public void deleteMenuItem(RestaurantIterator iter);
 	
 	public boolean isOrderInMenu(int orderNumber);
+	
+	public String toString();
 	
 	
 }

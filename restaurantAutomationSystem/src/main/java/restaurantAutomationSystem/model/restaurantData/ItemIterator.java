@@ -1,4 +1,4 @@
-package restaurantAutomationSystem.restaurantData;
+package restaurantAutomationSystem.model.restaurantData;
 
 class ItemIterator implements RestaurantIterator {
 	

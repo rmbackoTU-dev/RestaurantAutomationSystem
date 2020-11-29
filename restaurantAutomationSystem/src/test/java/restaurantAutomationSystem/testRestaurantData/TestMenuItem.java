@@ -1,8 +1,10 @@
 package restaurantAutomationSystem.testRestaurantData;
 
 import org.junit.jupiter.api.Test;
+
+import restaurantAutomationSystem.model.restaurantData.MenuItem;
+
 import org.junit.jupiter.api.Assertions;
-import restaurantAutomationSystem.restaurantData.MenuItem;
 
 public class TestMenuItem {
 

@@ -1,5 +1,4 @@
-package restaurantAutomationSystem.restaurantData;
-
+package restaurantAutomationSystem.model.restaurantData;
 
 public abstract class MenuDecorator implements MenuData {
 

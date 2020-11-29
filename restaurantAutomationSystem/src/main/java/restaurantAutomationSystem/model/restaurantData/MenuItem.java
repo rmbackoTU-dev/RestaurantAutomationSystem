@@ -1,4 +1,4 @@
-package restaurantAutomationSystem.restaurantData;
+package restaurantAutomationSystem.model.restaurantData;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

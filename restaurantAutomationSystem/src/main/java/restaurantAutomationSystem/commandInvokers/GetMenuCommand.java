@@ -1,8 +1,8 @@
 package restaurantAutomationSystem.commandInvokers;
 
 import restaurantAutomationSystem.commandInvokers.exceptions.CommandErrorException;
-import restaurantAutomationSystem.restaurantData.Aggregator;
-import restaurantAutomationSystem.restaurantData.Menu;
+import restaurantAutomationSystem.model.restaurantData.Aggregator;
+import restaurantAutomationSystem.model.restaurantData.Menu;
 
 public class GetMenuCommand implements RestaurantCommandInterface {
 

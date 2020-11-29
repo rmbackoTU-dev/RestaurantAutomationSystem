@@ -1,4 +1,4 @@
-package restaurantAutomationSystem.restaurantData;
+package restaurantAutomationSystem.model.restaurantData;
 
 public class Aggregator {
 	
@@ -17,7 +17,8 @@ public class Aggregator {
 		 */
 		this.newMenu=new Menu();
 		this.newOrder=new Order();
-		this.currentTab=new Tab(newMenu, newOrder);
+		//TODO Fix Tab Constructor
+		//this.currentTab=new Tab(newMenu, newOrder);
 	}
 	
 	/**
@@ -33,7 +34,8 @@ public class Aggregator {
 		{
 			this.newMenu=new Menu(aMenu);
 			this.newOrder=new Order(anOrder);
-			this.currentTab=new Tab(newMenu, newOrder);
+			//TODO fix Tab constructor
+			//this.currentTab=new Tab(newMenu, newOrder);
 		}
 		catch(IllegalArgumentException iae)
 		{
@@ -52,7 +54,8 @@ public class Aggregator {
 		menu and order from  another aggregator*/
 		this.newMenu=new Menu(anAggregator.getMenu());
 		this.newOrder=new Order(anAggregator.getOrder());
-		this.currentTab=new Tab(newMenu, newOrder);
+		//TODO Fix Tab Constructor
+		//this.currentTab=new Tab(newMenu, newOrder);
 		}
 		catch(IllegalArgumentException iae)
 		{

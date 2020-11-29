@@ -2,13 +2,14 @@ package restaurantAutomationSystem.testRestaurantData;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
-import restaurantAutomationSystem.restaurantData.Aggregator;
-import restaurantAutomationSystem.restaurantData.RestaurantIterator;
-import restaurantAutomationSystem.restaurantData.Tab;
-import restaurantAutomationSystem.restaurantData.Menu;
-import restaurantAutomationSystem.restaurantData.MenuItem;
-import restaurantAutomationSystem.restaurantData.Order;
-import restaurantAutomationSystem.restaurantData.OrderItem;
+
+import restaurantAutomationSystem.model.restaurantData.Aggregator;
+import restaurantAutomationSystem.model.restaurantData.Menu;
+import restaurantAutomationSystem.model.restaurantData.MenuItem;
+import restaurantAutomationSystem.model.restaurantData.Order;
+import restaurantAutomationSystem.model.restaurantData.OrderItem;
+import restaurantAutomationSystem.model.restaurantData.RestaurantIterator;
+import restaurantAutomationSystem.model.restaurantData.Tab;
 import restaurantAutomationSystem.testRestaurantData.TestOrder;
 
 public class TestAggregator {

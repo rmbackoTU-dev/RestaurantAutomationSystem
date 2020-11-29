@@ -4,14 +4,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 import restaurantAutomationSystem.commandInvokers.exceptions.CommandErrorException;
+import restaurantAutomationSystem.model.restaurantData.Aggregator;
+import restaurantAutomationSystem.model.restaurantData.Menu;
+import restaurantAutomationSystem.model.restaurantData.MenuItem;
+import restaurantAutomationSystem.model.restaurantData.Order;
+import restaurantAutomationSystem.model.restaurantData.OrderItem;
 import restaurantAutomationSystem.commandInvokers.GetMenuCommand;
 import restaurantAutomationSystem.commandInvokers.GetTabCommand;
 import restaurantAutomationSystem.commandInvokers.RestaurantCommandInterface;
-import restaurantAutomationSystem.restaurantData.Aggregator;
-import restaurantAutomationSystem.restaurantData.Menu;
-import restaurantAutomationSystem.restaurantData.Order;
-import restaurantAutomationSystem.restaurantData.MenuItem;
-import restaurantAutomationSystem.restaurantData.OrderItem;
 
 
 public class TestGetMenuCommand {

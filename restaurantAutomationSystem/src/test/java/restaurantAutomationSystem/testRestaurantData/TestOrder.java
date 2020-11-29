@@ -6,9 +6,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import restaurantAutomationSystem.restaurantData.RestaurantIterator;
-import restaurantAutomationSystem.restaurantData.Order;
-import restaurantAutomationSystem.restaurantData.OrderItem;
+import restaurantAutomationSystem.model.restaurantData.Order;
+import restaurantAutomationSystem.model.restaurantData.OrderItem;
+import restaurantAutomationSystem.model.restaurantData.RestaurantIterator;
 
 public class TestOrder {
 
@@ -84,7 +84,7 @@ public class TestOrder {
 		RestaurantIterator aOrderIterator=this.testOrder.getAllItemsIterator();
 		Assertions.assertThrows(IllegalStateException.class, () -> 
 		{
-			testOrder.deleteOrderItem(aOrderIterator);
+			testOrder.removeFromOrder(aOrderIterator);
 		});
 	}
 	
@@ -96,7 +96,7 @@ public class TestOrder {
 		this.testOrder.addOrderItem(oneItem);
 		RestaurantIterator aOrderIterator=this.testOrder.getAllItemsIterator();
 		aOrderIterator.next();
-		this.testOrder.deleteOrderItem(aOrderIterator);
+		this.testOrder.removeFromOrder(aOrderIterator);
 		Assertions.assertThrows(IllegalStateException.class, () -> 
 		{
 			aOrderIterator.next();
@@ -115,7 +115,7 @@ public class TestOrder {
 		RestaurantIterator aMenuIterator=this.testOrder.getAllItemsIterator();
 		aMenuIterator.next();
 		aMenuIterator.next();
-		this.testOrder.deleteOrderItem(aMenuIterator);
+		this.testOrder.removeFromOrder(aMenuIterator);
 		OrderItem currentItem=(OrderItem) aMenuIterator.next();
 		Assert.assertEquals(1, currentItem.getOrderNumber());
 	}
@@ -130,7 +130,7 @@ public class TestOrder {
 		this.testOrder.addOrderItem(twoItem);
 		RestaurantIterator aMenuIterator=this.testOrder.getAllItemsIterator();
 		aMenuIterator.next();
-		this.testOrder.deleteOrderItem(aMenuIterator);
+		this.testOrder.removeFromOrder(aMenuIterator);
 		OrderItem currentItem=(OrderItem) aMenuIterator.next();
 		Assert.assertEquals(2, currentItem.getOrderNumber());
 	}
@@ -148,7 +148,7 @@ public class TestOrder {
 		RestaurantIterator aOrderIterator=this.testOrder.getAllItemsIterator();
 		aOrderIterator.next();
 		aOrderIterator.next();
-		this.testOrder.deleteOrderItem(aOrderIterator);
+		this.testOrder.removeFromOrder(aOrderIterator);
 		OrderItem currentItem=(OrderItem) aOrderIterator.next();
 		Assert.assertEquals(1, currentItem.getOrderNumber());
 	}
