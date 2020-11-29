@@ -4,11 +4,8 @@ package restaurantAutomationSystem.model.restaurantData;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import restaurantAutomationSystem.model.restaurantData.Order.AllOrderItemIterator;
-
 public class Tab implements BillingComponent 
 {
-	//TODO remove need to check menu at tab level
     private BigDecimal tabTotal;
     private int numberOfOrders;
     private int firstEmpty;
@@ -28,28 +25,13 @@ public class Tab implements BillingComponent
     
     
     /**
-    * Parameter Constructor
+    * Parameter Constructor with orderArray
     */
-    public Tab(Menu menu, Order[] orderArray) 
+    public Tab(Order[] orderArray) 
     {
-    	if(menu == null)
-    	{
-    		throw new IllegalArgumentException("Menu has not been created.");
-    	}
-    	
     	if(orderArray == null)
     	{
     		throw new IllegalArgumentException("Menu has not been created.");
-    	}
-    	Order aOrder;
-    	for(int i=0; i<orderArray.length; i++)
-    	{
-    		aOrder=orderArray[i];
-    		if(!(this.isCorrectOrder(menu, aOrder)))
-    		{
-    			throw new IllegalArgumentException("Some of the orders are "
-    					+ "not found in the menu given");
-    		}
     	}
     	this.tabTotal=new BigDecimal(0);
     	this.tabTotal.setScale(2, RoundingMode.CEILING);
@@ -63,21 +45,39 @@ public class Tab implements BillingComponent
     }
     
     /**
-     * Parameter Constructor without pre-existing order Array
+     * Parameter Constructor with size parameter
      **/
-    public Tab(int tabSize, Menu aMenu)
+    public Tab(int tabSize)
     {
-    	if(aMenu == null)
-    	{
-    		throw new IllegalArgumentException("Menu has not been created.");
-    	}
     	
     	if(tabSize < 1)
     	{
     		throw new IllegalArgumentException("Tab must be at least of size one");
     	}
     	this.numberOfOrders=tabSize;
-    	
+    	this.firstEmpty=0;
+    	this.orders=new Order[numberOfOrders];
+    }
+    
+    /**
+     * Copy Constructor
+     */
+    public Tab(Tab copyTab)
+    {
+    	if( copyTab == null )
+    	{
+    		throw new IllegalArgumentException("Tab parameter must be set");
+    	}
+    	RestaurantIterator iter=copyTab.getAllTabItemsIterator();
+    	this.numberOfOrders=copyTab.size()-1;
+    	this.firstEmpty=copyTab.size();
+    	this.orders=new Order[this.numberOfOrders];
+    	int i=0;
+    	while(iter.hasNext())
+    	{
+    		this.orders[i]=(Order) iter.next();
+    		i=i+1;
+    	}
     }
     
     
@@ -112,40 +112,6 @@ public class Tab implements BillingComponent
     	return tabString;
     }
     
-    /**
-     * Checks if a tab matches a order to menu items that exist
-     * @param aMenu
-     * @param aOrder
-     * @return
-     */
-    private boolean isCorrectOrder(Menu aMenu, Order aOrder)
-	{
-    	//Added to Tab because it is more appropriate to check for correctness
-    	//closer to the creation of the object. Otherwise we run into exceptions 
-    	//that may or may not happen.
-    	boolean allOrdersMatch=false;
-    	if( aOrder.size() > 0)
-    	{
-    		AllOrderItemIterator orderIterator=aOrder.getAllItemsIterator();
-    		boolean orderMismatch=false;
-    		OrderItem currentItem;
-    		int currentOrderNumber;
-    		while(orderIterator.hasNext() && !orderMismatch)
-    		{
-    			currentItem=(OrderItem) orderIterator.next();
-    			currentOrderNumber=currentItem.getOrderNumber();
-    			orderMismatch=!(aMenu.isOrderInMenu(currentOrderNumber));
-    		}
-    		allOrdersMatch=!orderMismatch;
-    	}
-    	else
-    	{
-    		//if the size of the orders is 0 then all of
-    		//the orders are found in the menu
-    		allOrdersMatch=true;
-    	}
-		return allOrdersMatch;
-	}
 
     public int size()
     {
@@ -210,7 +176,14 @@ public class Tab implements BillingComponent
 		RestaurantIterator iter=this.getAllTabItemsIterator();
 		int i=0;
 		Order currentOrder;
-		//TODO: Generate new tabs of size 1 and add the current order to it.
+		while(iter.hasNext())
+		{
+			currentOrder=(Order) iter.next();
+			Tab newTab=new Tab(1);
+			newTab.addOrder(currentOrder);
+			splitTab[i]=newTab;
+			i=i+1;
+		}
 		return splitTab;
 	}
 

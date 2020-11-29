@@ -8,20 +8,19 @@ public class Order implements BillingComponent {
 	private OrderItem[] orderList;
 	private int orderSize=10;
 	private int firstEmptyIndex=0;
-	private Menu currentMenu;
+	//private Menu currentMenu;
 	
 	
 	public Order()
 	{
 		orderList=new OrderItem[orderSize];
-		currentMenu=new Menu();
+		//currentMenu=new Menu();
 	}
 	
-	public Order(int orderSize, Menu aMenu)
+	public Order(int orderSize)
 	{
 		this.orderSize=orderSize;
 		orderList=new OrderItem[orderSize];
-		currentMenu=aMenu;
 	}
 	
 	/**
@@ -52,13 +51,12 @@ public class Order implements BillingComponent {
 				
 			}
 		}
-		this.currentMenu=new Menu(orderToCopy.getCurrentMenu());
 	}
 	
-	public Menu getCurrentMenu()
-	{
-		return this.currentMenu;
-	}
+	//public Menu getCurrentMenu()
+	//{
+		//return this.currentMenu;
+	//}
 	
 	public int size()
 	{
@@ -155,18 +153,7 @@ public class Order implements BillingComponent {
 		while(iter.hasNext())
 		{
 			item= (OrderItem) iter.next();
-			if(this.isCorrectOrder(item))
-			{
-				try
-				{
-					total=total.add(this.getOrderItemAmount(item));
-				}
-				catch(IllegalStateException e)
-				{
-					System.err.println(" Order "+item.getOrderNumber()+
-							"is not in the current menu");
-				}
-			}
+			total=total.add(item.getTotalAmount());
 		}
 		return total;
 	}
@@ -184,20 +171,7 @@ public class Order implements BillingComponent {
 		while(iter.hasNext())
 		{
 			item= (OrderItem) iter.next();
-			if(this.isCorrectOrder(item))
-			{
-				try
-				{
-					currentTaxAmount=this.getOrderItemAmount(item).multiply(
-						taxPercentage);
-				}
-				catch(IllegalStateException e)
-				{
-					System.err.println(" Order "+item.getOrderNumber()+
-							"is not in the current menu");
-				}
-			}
-			taxAmount=taxAmount.add(currentTaxAmount);
+			taxAmount=taxAmount.add(item.calculateTax());
 		}
 		return taxAmount;
 	}
@@ -247,52 +221,6 @@ public class Order implements BillingComponent {
 		return orderItemsArray;
 	}
 	
-	private BigDecimal getOrderItemAmount( OrderItem item)
-	{
-		BigDecimal price=new BigDecimal(0);
-		price=price.setScale(2, RoundingMode.CEILING);
-		RestaurantIterator menuIter=this.currentMenu.getAllItemsIterator();
-		MenuItem currentMenuItem;
-		boolean found=false;
-		while(menuIter.hasNext())
-		{
-			currentMenuItem=(MenuItem) menuIter.next();
-			if(item.getOrderNumber() == currentMenuItem.getOrderNumber())
-			{
-				price=new BigDecimal(currentMenuItem.getCategory());
-				price.setScale(2, RoundingMode.CEILING);
-			}
-		}
-		if(!found)
-		{
-			throw new IllegalStateException("Item not in menu,"
-					+ " make sure you check the menu before "
-					+ " using getOrderItemAmount");
-		}
-		return price;
-	}
-	
-	/**
-     * Checks if a order is in the currentMenu
-     * @param aMenu
-     * @param aOrder
-     * @return whether the order currentMenu
-     */
-    private boolean isCorrectOrder( OrderItem item)
-	{
-    	boolean orderInMenu=false;
-    	MenuItem currentItem;
-    	RestaurantIterator menuIter=this.currentMenu.getAllItemsIterator();
-    	while(menuIter.hasNext() && !orderInMenu)
-    	{
-    		currentItem=(MenuItem) menuIter.next();
-    		if(currentItem.getOrderNumber() == item.getOrderNumber())
-    		{
-    			orderInMenu=true;
-    		}
-    	}
-		return orderInMenu;
-	}
 	
 	/**
 	 * Factory method to return an AllItemsIterator
