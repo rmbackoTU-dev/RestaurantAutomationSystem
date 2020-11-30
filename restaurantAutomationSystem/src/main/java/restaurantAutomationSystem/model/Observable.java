@@ -10,4 +10,6 @@ public interface Observable {
 	
 	
 	public void notifySubscribers();
+	
+	public Object getObjectFromObservable();
 }

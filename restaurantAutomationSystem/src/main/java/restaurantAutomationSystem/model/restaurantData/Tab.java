@@ -254,6 +254,21 @@ public class Tab implements BillingComponent
 		}
 	}
 	
+	public void changeOrder(Order order, int orderNum)
+	{
+		if(order == null)
+		{
+			throw new IllegalArgumentException("Order not be null");
+		}
+		
+		if(orderNum < 1 )
+		{
+			throw new IllegalArgumentException("The order number must at least 1");
+		}
+		
+		this.orders[orderNum]=new Order(order);
+	}
+	
 	public RestaurantIterator getAllTabItemsIterator()
 	{
 		AllTabItemIterator iter=new AllTabItemIterator();

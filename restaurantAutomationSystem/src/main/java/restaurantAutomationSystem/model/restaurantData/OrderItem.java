@@ -8,6 +8,7 @@ public class OrderItem implements BillingComponent {
 	private int orderNumber;
 	private int quantity;
 	private Menu usedMenu;
+	private int orderId;
 	
 	/**
 	 * Default Constructor
