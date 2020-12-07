@@ -24,7 +24,6 @@ public class ObservableTime implements Observable {
 		subscribers=new Observer[5];
 	}
 	
-	@Override
 	public void register(Observer subscriber) {
 		int index=0;
 		Observer currentObserver=subscribers[index];
@@ -39,13 +38,11 @@ public class ObservableTime implements Observable {
 		this.subscribers[index]=subscriber;
 	}
 
-	@Override
 	public void unregister(Observer subscriber) {
 		int indexToRemove=subscriber.getInstanceId();
 		this.subscribers[indexToRemove]=null;
 	}
 
-	@Override
 	public void notifySubscribers() {
 		Observer subscriber;
 		for(int i=0; i< subscribers.length; i++)
@@ -55,8 +52,21 @@ public class ObservableTime implements Observable {
 		}
 		
 	}
+	
+	public void setDate(LocalDate date)
+	{
+		this.clock.setMonth(date.getMonthValue());
+		this.clock.setDay(date.getDayOfMonth());
+		this.notifySubscribers();
+	}
+	
+	public void setTime(LocalTime time)
+	{
+		this.clock.setHour(time.getHour());
+		this.clock.setMinute(time.getMinute());
+		this.notifySubscribers();
+	}
 
-	@Override
 	public Object getObjectFromObservable() {
 		//Only way to make an observable event was to return a reference to a class that has the data
 		//in the case of restaurantClock the object would only store the data. Alternative being to return this

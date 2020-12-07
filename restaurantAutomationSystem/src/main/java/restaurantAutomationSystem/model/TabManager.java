@@ -18,6 +18,7 @@ public class TabManager implements Observable {
 	private Tab[] tabs;
 	private int tablesTotal;
 	private int tablesAvailable;
+	public static final int DEFAULT_TABLE_COUNT=10;
 	
 	public TabManager()
 	{
@@ -42,7 +43,6 @@ public class TabManager implements Observable {
 		this.tablesAvailable=this.tablesAvailable+1;
 	}
 	
-	@Override
 	public Tab[] getObjectFromObservable()
 	{
 		return this.tabs;
@@ -54,15 +54,22 @@ public class TabManager implements Observable {
 		Observer currentObserver=subscribers[index];
 		//find the first empty index and set the index to place
 		//the new subscriber in that place
-		while(currentObserver != null)
+		if(tablesAvailable > 0)
 		{
-			index=index+1;
-			currentObserver=subscribers[index];
+			while(currentObserver != null)
+			{
+				index=index+1;
+				currentObserver=subscribers[index];
+			}
+			this.tablesAvailable=tablesAvailable-1;
+			subscriber.setInstanceId(index);
+			this.subscribers[index]=subscriber;
+			this.tabs[index]=new Tab();
 		}
-		this.tablesAvailable=tablesAvailable-1;
-		subscriber.setInstanceId(index);
-		this.subscribers[index]=subscriber;
-		this.tabs[index]=new Tab();
+		else
+		{
+			System.err.println("No tables are available");
+		}
 	}
 	
 	public void unregister(Observer subscriber)

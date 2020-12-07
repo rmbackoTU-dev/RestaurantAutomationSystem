@@ -24,7 +24,6 @@ public class CreditCardBilling implements BillingStrategy {
 		this.verifySecurityCode=this.billingParameters.get("Security-Token");
 	}
 	
-	@Override
 	public boolean payBill(BigDecimal total) throws IllegalStateException {
 		CreditCardPayment payment=CreditCardPayment.creditCardPaymentFactory();
 		if(this.verified)
@@ -80,13 +79,11 @@ public class CreditCardBilling implements BillingStrategy {
 		}
 	}
 
-	@Override
 	public void authenticate(String verificationId) {
 		String securityToken=this.billingParameters.get("Security-Token");
 		this.verified=(securityToken == verificationId);
 	}
 	
-	@Override
 	public int getRecordNum()
 	{
 		return this.recordNumber;

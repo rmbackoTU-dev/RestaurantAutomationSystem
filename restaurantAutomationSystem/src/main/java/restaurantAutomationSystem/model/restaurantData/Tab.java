@@ -118,7 +118,6 @@ public class Tab implements BillingComponent
     	return firstEmpty;
     }
     
-	@Override
 	public BigDecimal getTotalAmount() {
 		RestaurantIterator iter=this.getAllTabItemsIterator();
 		BigDecimal total=new BigDecimal(0);
@@ -133,7 +132,6 @@ public class Tab implements BillingComponent
 	}
 
 
-	@Override
 	public BigDecimal calculateTax() {
 		RestaurantIterator iter=this.getAllTabItemsIterator();
 		BigDecimal totalTaxes=new BigDecimal(0);
@@ -148,13 +146,11 @@ public class Tab implements BillingComponent
 	}
 
 
-	@Override
 	public BigDecimal getTotalWithTax() {
 		return this.getTotalAmount().add(this.calculateTax());
 	}
 
 
-	@Override
 	public void displayBill() {
 		System.out.println(Tab.TABHEADING+Tab.LINESPACE);
 		RestaurantIterator iter=this.getAllTabItemsIterator();
@@ -170,7 +166,6 @@ public class Tab implements BillingComponent
 	/**
 	 * Split the tab into multiple single order tabs
 	 */
-	@Override
 	public BillingComponent[] splitOrder() {
 		Tab[] splitTab=new Tab[this.firstEmpty];
 		RestaurantIterator iter=this.getAllTabItemsIterator();
@@ -186,11 +181,10 @@ public class Tab implements BillingComponent
 		}
 		return splitTab;
 	}
+	
 
 
-	@Override
 	public void addOrder(BillingComponent order) {
-		// TODO Auto-generated method stub
 		if(this.numberOfOrders == this.firstEmpty)
 		{
 			this.numberOfOrders=(numberOfOrders*2);
@@ -218,7 +212,6 @@ public class Tab implements BillingComponent
 	}
 
 
-	@Override
 	public void removeFromOrder(RestaurantIterator iter) {
 		int indexOfItemToRemove=iter.getCurrentIndex();
 		if(indexOfItemToRemove == -1)
@@ -267,6 +260,50 @@ public class Tab implements BillingComponent
 		}
 		
 		this.orders[orderNum]=new Order(order);
+	}
+	
+	/**
+	 * Get the order number of an existing order in the tab
+	 * @param order
+	 * @return -1 if order does not exist in tab the index otherwise.
+	 */
+	public int getOrderIndex(Order order)
+	{
+		int index=-1;
+		RestaurantIterator tabIter=this.getAllTabItemsIterator();
+		Order currentOrder;
+		while(tabIter.hasNext())
+		{
+			currentOrder=(Order) tabIter.next();
+			if(order.equals(currentOrder))
+			{
+				if(tabIter.getCurrentIndex() != index)
+				{
+					index=tabIter.getCurrentIndex();
+				}
+			}
+		}
+		return index;
+		
+	}
+	
+	public boolean equals(Tab tab)
+	{
+		boolean same=true;
+		boolean found=false;
+		RestaurantIterator tabIter=this.getAllTabItemsIterator();
+		RestaurantIterator compIter=tab.getAllTabItemsIterator();
+		Order compItem;
+		while(compIter.hasNext() && same)
+		{
+			compItem=(Order) compIter.next();
+			while(tabIter.hasNext() && !(found))
+			{
+				found=(compItem.equals((OrderItem) tabIter.next()));
+			}
+			same=found;
+		}
+		return same;
 	}
 	
 	public RestaurantIterator getAllTabItemsIterator()

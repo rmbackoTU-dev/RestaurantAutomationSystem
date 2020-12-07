@@ -27,7 +27,6 @@ public class CashBilling implements BillingStrategy {
 	 * Main Strategy function to complete a payment of a bill
 	 * @return true if success, false if failure
 	 */
-	@Override
 	public boolean payBill(BigDecimal total) 
 	throws IllegalStateException
 	{
@@ -63,7 +62,6 @@ public class CashBilling implements BillingStrategy {
 	/**
 	 * Authenticates the payment before paying
 	 */
-	@Override
 	public void authenticate(String id)
 	{
 		this.verified=(verifyID == id);
@@ -80,7 +78,6 @@ public class CashBilling implements BillingStrategy {
 	 * Returns the record number being used for this record number
 	 * @return
 	 */
-	@Override
 	public int getRecordNum()
 	{
 		return this.recordNumber;

@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class Order implements BillingComponent {
-	//TODO: Remove need to check menu at Order level
 	private OrderItem[] orderList;
 	private int orderSize=10;
 	private int firstEmptyIndex=0;
@@ -14,7 +13,6 @@ public class Order implements BillingComponent {
 	public Order()
 	{
 		orderList=new OrderItem[orderSize];
-		//currentMenu=new Menu();
 	}
 	
 	public Order(int orderSize)
@@ -53,10 +51,6 @@ public class Order implements BillingComponent {
 		}
 	}
 	
-	//public Menu getCurrentMenu()
-	//{
-		//return this.currentMenu;
-	//}
 	
 	public int size()
 	{
@@ -138,13 +132,11 @@ public class Order implements BillingComponent {
 		itemIter.resetIter();
 	}
 	
-	@Override
 	public BigDecimal getTotalWithTax()
 	{
 		return this.getTotalAmount().add(this.calculateTax());
 	}
 	
-	@Override
 	public BigDecimal getTotalAmount() {
 		BigDecimal total=new BigDecimal(0);
 		total=total.setScale(2, RoundingMode.CEILING);
@@ -158,7 +150,6 @@ public class Order implements BillingComponent {
 		return total;
 	}
 
-	@Override
 	public BigDecimal calculateTax() {
 		BigDecimal taxAmount=new BigDecimal(0);
 		taxAmount=taxAmount.setScale(2, RoundingMode.CEILING);
@@ -176,7 +167,6 @@ public class Order implements BillingComponent {
 		return taxAmount;
 	}
 
-	@Override
 	public void displayBill() 
 	{
 		RestaurantIterator iter=this.getAllItemsIterator();
@@ -208,7 +198,6 @@ public class Order implements BillingComponent {
 		return orderString;
 	}
 
-	@Override
 	public BillingComponent[] splitOrder() 
 	{
 		RestaurantIterator iter=this.getAllItemsIterator();
@@ -220,6 +209,26 @@ public class Order implements BillingComponent {
 		}
 		return orderItemsArray;
 	}
+	
+	public boolean equals(Order order)
+	{
+		boolean same=true;
+		boolean found=false;
+		RestaurantIterator itemIter=this.getAllItemsIterator();
+		RestaurantIterator compIter=order.getAllItemsIterator();
+		OrderItem compItem;
+		while(compIter.hasNext() && same)
+		{
+			compItem=(OrderItem) compIter.next();
+			while(itemIter.hasNext() && !(found))
+			{
+				found=(compItem.equals((OrderItem) itemIter.next()));
+			}
+			same=found;
+		}
+		return same;
+	}
+	
 	
 	
 	/**

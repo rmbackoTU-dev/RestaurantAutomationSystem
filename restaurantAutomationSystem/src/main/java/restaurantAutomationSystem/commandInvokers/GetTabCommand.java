@@ -8,9 +8,9 @@ public class GetTabCommand implements RestaurantCommandInterface {
 
 	private Tab tabData;
 	
-	public GetTabCommand(Aggregator systemData)
+	public GetTabCommand(Aggregator systemData, int tabIndex)
 	{
-		this.tabData=systemData.getTab();
+		this.tabData=systemData.getTab(tabIndex);
 	}
 	
 	public Tab execute() throws CommandErrorException {

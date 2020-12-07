@@ -17,18 +17,15 @@ public class MenuManager implements Observer {
 		this.events=new ArrayList<MenuEvent>();
 	}
 	
-	@Override
 	public String getClassId() 
 	{
 		return this.getClass().getName();
 	}
 
-	@Override
 	public int getInstanceId() {
 		return instanceId;
 	}
 
-	@Override
 	public void refreshData(Observable time) {
 		RestaurantClock currentTime=(RestaurantClock) time.getObjectFromObservable();
 		//Applies the last event that applies for other similar events to apply remove
@@ -65,7 +62,6 @@ public class MenuManager implements Observer {
 		events.remove(indexOfEvent);
 	}
 
-	@Override
 	public void setInstanceId(int id) {
 		this.instanceId=id;
 		

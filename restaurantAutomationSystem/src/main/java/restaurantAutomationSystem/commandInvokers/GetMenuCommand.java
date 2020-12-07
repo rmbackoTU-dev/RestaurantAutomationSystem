@@ -10,7 +10,7 @@ public class GetMenuCommand implements RestaurantCommandInterface {
 	
 	public GetMenuCommand(Aggregator systemData)
 	{
-		this.restaurantMenu=systemData.getMenu();
+		this.restaurantMenu=systemData.getCurrentMenu();
 	}
 	
 	public Object execute() throws CommandErrorException

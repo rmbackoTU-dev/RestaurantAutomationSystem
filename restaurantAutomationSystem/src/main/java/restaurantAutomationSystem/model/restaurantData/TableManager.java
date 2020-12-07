@@ -4,8 +4,9 @@ import restaurantAutomationSystem.model.Observable;
 
 public class TableManager implements Observer{
 
-	public Tab tab;
-	public int instanceId;
+	private Tab tab;
+	private int instanceId;
+	private int tableId;
 	
 	public TableManager()
 	{
@@ -17,17 +18,14 @@ public class TableManager implements Observer{
 		this.tab=new Tab(newTab);
 	}
 	
-	@Override
 	public String getClassId() {
 		return this.getClass().getName();
 	}
 
-	@Override
 	public int getInstanceId() {
 		return this.instanceId;
 	}
 
-	@Override
 	public void refreshData(Observable tabManager) 
 	{
 		Tab[] tabManagerData=(Tab[]) tabManager.getObjectFromObservable();
@@ -40,9 +38,18 @@ public class TableManager implements Observer{
 		return tab;
 	}
 	
-	@Override
 	public void setInstanceId(int id)
 	{
 		this.instanceId=id;
+	}
+	
+	public void setTableId(int id)
+	{
+		this.tableId=id;
+	}
+	
+	public int getTableId()
+	{
+		return this.tableId;
 	}
 }
