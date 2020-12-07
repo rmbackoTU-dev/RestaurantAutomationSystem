@@ -18,5 +18,4 @@ public interface BillingComponent {
 	
 	public void removeFromOrder(RestaurantIterator iter);
 	
-	
 }

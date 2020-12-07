@@ -1,0 +1,8 @@
+Record-Number:1
+id:1
+cash_amount:400.00
+----
+Record-Number:2
+id:2
+cash_amount:20.00
+----

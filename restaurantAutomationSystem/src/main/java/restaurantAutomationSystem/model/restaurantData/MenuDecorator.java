@@ -39,19 +39,16 @@ public abstract class MenuDecorator implements MenuData {
 		return this.baseMenu.toString();
 	}
 	
-	@Override
 	public void addMenuItem(MenuItem item)
 	{
 		this.baseMenu.addMenuItem(item);
 	}
 	
-	@Override
 	public void deleteMenuItem(RestaurantIterator iter)
 	{
 		this.baseMenu.deleteMenuItem(iter);
 	}
 	
-	@Override
 	public boolean isOrderInMenu(int orderNumber)
 	{
 		return this.baseMenu.isOrderInMenu(orderNumber);

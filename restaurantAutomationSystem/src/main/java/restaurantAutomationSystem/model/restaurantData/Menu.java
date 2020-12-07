@@ -1,6 +1,6 @@
 package restaurantAutomationSystem.model.restaurantData;
 
-public class Menu implements MenuData{
+public class Menu implements MenuData {
 
 	private MenuItem[] menuList;
 	private int menuSize=10;
@@ -107,7 +107,6 @@ public class Menu implements MenuData{
 	 * Adds an item to the menuList
 	 * @param item
 	 */
-	@Override
 	public void addMenuItem(MenuItem item)
 	throws NullPointerException
 	{
@@ -149,7 +148,6 @@ public class Menu implements MenuData{
 	 * If the item is the last item delete,
 	 * if the item is a middle item move all the indexes up by 1
 	 */
-	@Override
 	public void deleteMenuItem(RestaurantIterator itemIter)
 	{
 		int indexOfItemToRemove=itemIter.getCurrentIndex();
@@ -248,7 +246,6 @@ public class Menu implements MenuData{
 	 * @param orderNumber
 	 * @return true if found, otherwise false
 	 */
-	@Override
 	public boolean isOrderInMenu(int orderNumber)
 	{
 		RestaurantIterator searchIterator=this.getAllItemsIterator();

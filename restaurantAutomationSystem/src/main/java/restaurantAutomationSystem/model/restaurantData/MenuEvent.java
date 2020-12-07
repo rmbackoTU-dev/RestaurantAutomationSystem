@@ -1,32 +1,39 @@
 package restaurantAutomationSystem.model.restaurantData;
 
+
+import restaurantAutomationSystem.model.RestaurantClock;
+import restaurantAutomationSystem.model.restaurantData.MenuManager;
+
 public class MenuEvent {
 
-	private MenuManager currentManager;
-	private int hour;
-	private int minute;
-	private int month;
-	private int day;
-	private int period;
+	private RestaurantClock clock;
 	private MenuData availableMenu;
+	private MenuManager manager;
 	
 	/**
 	 * Default Constructor
-	 * Note a -1 in hour, minute, month, day, or period 
+	 * Note a -1 in hour, minute, month, day 
 	 * means the field is not applicable to the event.
+	 * period is false by default if hour or minute are not set then
+	 * then period will not be valid 
 	 */
 	public MenuEvent()
 	{
-		
+		this.clock=new RestaurantClock();
+		this.manager=new MenuManager();
+		availableMenu=this.manager.getAvailableMenu();
 	}
+	
 	
 	/**
 	 * Parameter Constructor
 	 * @param newMenu
 	 */
-	public MenuEvent(MenuData newMenu)
+	public MenuEvent(MenuData aMenu, MenuManager manager)
 	{
-		
+		this.clock=new RestaurantClock();
+		this.manager=manager;
+		availableMenu=new Menu((Menu)aMenu);
 	}
 	
 	/**
@@ -35,34 +42,74 @@ public class MenuEvent {
 	 */
 	public MenuEvent(MenuEvent event)
 	{
-		
+		this.clock=event.getClock();
+		this.manager=this.getManager();
+		this.availableMenu=new Menu((Menu) event.getAvailableMenu());
 	}
 	
-	public void setMenuManager(MenuManager manager)
+	public void setHour(int h)
 	{
-		this.currentManager=manager;
+		this.clock.setHour(h);
 	}
 	
-	public boolean isEventTime()
+	public void setMinutes(int m)
 	{
-		//TODO: compare to the set hour and minute
-		return false;
+		this.clock.setMinute(m);
 	}
 	
-	public boolean isEventDay()
+	public void setDay(int d)
 	{
-		//TODO: compare to the set month and day
-		return false;
+		this.clock.setDay(d);
+	}
+	
+	public void setMonth(int mon)
+	{
+		this.clock.setMonth(mon);
+	}
+	
+	public void setPeriod(boolean isAm)
+	{
+		this.clock.setPeriod(isAm);
+	}
+	
+	public RestaurantClock getClock()
+	{
+		return this.clock;
+	}
+	
+	public MenuManager getManager()
+	{
+		return this.manager;
+	}
+	
+	public MenuData getAvailableMenu()
+	{
+		return this.availableMenu;
+	}
+	
+	public boolean isEventTime(RestaurantClock time)
+	{
+		return ((time.getHour() == this.clock.getHour()) 
+				&& (time.getMinute() == this.clock.getMinute()));
+	}
+	
+	public boolean isEventDay(RestaurantClock date)
+	{
+		return ((date.getDay() == this.clock.getDay()) 
+				&& (date.getMonth() == this.clock.getMonth()));
+
 	}
 	
 	public void setEventTime(int hour, int minute )
 	{
-		
+		this.setHour(hour);
+		this.setMinutes(minute);
 	}
 	
 	public void setEventDay(int month, int day)
 	{
-		
+		this.setMonth(month);
+		this.setDay(day);
 	}
 	
 	public void changeState()
@@ -76,9 +123,9 @@ public class MenuEvent {
 		}
 		else
 		{
-			if(!(currentManager == null))
+			if(!(this.manager == null))
 			{
-				currentManager.setAvailableMenu(availableMenu);
+				this.manager.setAvailableMenu(availableMenu);
 			}
 			else
 			{

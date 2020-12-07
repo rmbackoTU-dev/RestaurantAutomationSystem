@@ -8,6 +8,8 @@ public class OrderItem implements BillingComponent {
 	private int orderNumber;
 	private int quantity;
 	private Menu usedMenu;
+	private static int ordersPlaced=0;
+	private int orderId;
 	
 	/**
 	 * Default Constructor
@@ -17,6 +19,8 @@ public class OrderItem implements BillingComponent {
 		this.orderNumber=0;
 		this.quantity=0;
 		usedMenu=new Menu();
+		ordersPlaced=ordersPlaced+1;
+		this.orderId=ordersPlaced;
 	}
 	
 	/**
@@ -36,7 +40,8 @@ public class OrderItem implements BillingComponent {
 			throw new IllegalArgumentException("Set at least"+
 					"a quantity of at least 1");
     	}
-		
+		ordersPlaced=ordersPlaced+1;
+		this.orderId=ordersPlaced;
 		this.usedMenu=aMenu;
 	}
 	
@@ -49,6 +54,7 @@ public class OrderItem implements BillingComponent {
 	{
 		this.orderNumber=item.getOrderNumber();
 		int tempQuantity=item.getOrderQuantity();
+		this.orderId=item.getOrderId();
 		if(tempQuantity >0 )
 		{
 			this.quantity=tempQuantity;
@@ -95,11 +101,9 @@ public class OrderItem implements BillingComponent {
 		this.orderNumber=itemNum;
 	}
 
-	@Override
 	public BigDecimal getTotalAmount() {
 		BigDecimal total=new BigDecimal(0);
 		total=total.setScale(2, RoundingMode.CEILING);
-		OrderItem item;
 		if(this.isCorrectOrder())
 		{
 			try
@@ -116,7 +120,6 @@ public class OrderItem implements BillingComponent {
 
 	}
 
-	@Override
 	public BigDecimal calculateTax() {
 		BigDecimal taxAmount=new BigDecimal(0);
 		taxAmount=taxAmount.setScale(2, RoundingMode.CEILING);
@@ -183,12 +186,10 @@ public class OrderItem implements BillingComponent {
 		return price;
 	}
 
-	@Override
 	public BigDecimal getTotalWithTax() {
 		return this.getTotalAmount().add(this.calculateTax());
 	}
 
-	@Override
 	public void displayBill() {
 		System.out.println("Order Item "+this.getOrderNumber()+":"+
 				"price: $"+this.getTotalAmount().toPlainString()+
@@ -207,7 +208,14 @@ public class OrderItem implements BillingComponent {
 		return orderItemString;
 	}
 	
-	@Override
+	/**
+	 * Getter gets the order id
+	 */
+	public int getOrderId()
+	{
+		return this.orderId;
+	}
+	
 	/**
 	 * @return a array containing the current orderItem since the order
 	 * can not be split further
@@ -217,16 +225,19 @@ public class OrderItem implements BillingComponent {
 		return singletonOrderItem;
 	}
 
-	@Override
 	public void addOrder(BillingComponent orderObject) {
 		System.err.println("OrderItem is already smallest  billing component "
 				+ "and can not be added or deleted to itself");
 	}
 
-	@Override
 	public void removeFromOrder(RestaurantIterator iter) {
 		System.err.println("OrderItem is already smallest  billing component "
 				+ "and can not be added or deleted to itself");
 
+	}
+	
+	public boolean equals(OrderItem item)
+	{
+		return (item.getOrderId() == this.orderId);
 	}
 }

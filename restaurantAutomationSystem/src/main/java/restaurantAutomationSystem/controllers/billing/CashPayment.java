@@ -39,7 +39,6 @@ public class CashPayment implements PaymentStrategy {
     	return instance;
     }
 	
-	@Override
 	public  void addPaymentData(Map<String, String> dataFields) {
 	
 		if(dataFields.size() < 2)
@@ -75,7 +74,6 @@ public class CashPayment implements PaymentStrategy {
 		this.writeNewRecord(this.lastRecord, userID, cashAmount);
 	}
 
-	@Override
 	public int recordNumForLastRecordAdded()
 	{
 		return this.lastRecord;
@@ -186,7 +184,6 @@ public class CashPayment implements PaymentStrategy {
 		return lines;
 	}
 	
-	@Override
 	public Map<String, String> getRecord(int recordNum)
 	{
 		String[] record=this.readRecord(recordNum);

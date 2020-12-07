@@ -1,34 +1,55 @@
 package restaurantAutomationSystem.model.restaurantData;
 
+import restaurantAutomationSystem.model.Observable;
+
 public class TableManager implements Observer{
 
-	public Tab[] tabs;
+	private Tab tab;
+	private int instanceId;
+	private int tableId;
 	
-	@Override
-	public int getClassId() {
-		// TODO Auto-generated method stub
-		return 0;
+	public TableManager()
+	{
+		this.tab=new Tab();
+	}
+	
+	public TableManager(Tab newTab)
+	{
+		this.tab=new Tab(newTab);
+	}
+	
+	public String getClassId() {
+		return this.getClass().getName();
 	}
 
-	@Override
 	public int getInstanceId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.instanceId;
 	}
 
-	@Override
-	public void refreshData() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public Tab getTab(int Tabid)
+	public void refreshData(Observable tabManager) 
 	{
-		return tabs[Tabid];
+		Tab[] tabManagerData=(Tab[]) tabManager.getObjectFromObservable();
+		Tab tabToUpdate=tabManagerData[this.instanceId];
+		this.tab=new Tab(tabToUpdate);
+	}
+
+	public Tab getTab()
+	{
+		return tab;
 	}
 	
-	public Tab[] getTabs()
+	public void setInstanceId(int id)
 	{
-		return tabs;
+		this.instanceId=id;
+	}
+	
+	public void setTableId(int id)
+	{
+		this.tableId=id;
+	}
+	
+	public int getTableId()
+	{
+		return this.tableId;
 	}
 }
