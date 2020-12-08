@@ -274,19 +274,6 @@ public class Menu implements MenuData {
 			currentItem=(MenuItem) iter.next();
 			menuString=menuString+"\t\t"+currentItem.toString()+"\n";
 		}
-		
-		//Loop through each category as currently set and print out the items listed under that category.
-//		ItemIterator menuCategoryIterator;
-//		for(int n=0; n< this.menuCategorySize; n++)
-//		{
-//			menuCategoryIterator=new ItemIterator(this, n);
-//			menuString=menuString+this.menuCategories[n]+": \n\n\n";
-//			while(menuCategoryIterator.hasNext())
-//			{
-//				currentItem=(MenuItem) menuCategoryIterator.next();
-//				menuString=menuString+"\t"+currentItem.toString()+"\n\n";
-//			}
-//		}
 		return menuString;
 	}
 	

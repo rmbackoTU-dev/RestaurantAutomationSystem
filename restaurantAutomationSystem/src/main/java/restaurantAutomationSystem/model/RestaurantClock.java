@@ -92,4 +92,26 @@ public class RestaurantClock {
 	}
 	
 	
+	public String getTimeString()
+	{
+		String hourString=String.valueOf(this.hour);
+		String minuteString=String.valueOf(this.minute);
+		String periodString="PM";
+		if(this.period)
+		{
+			periodString="AM";
+		}
+		String timeString=hourString+minuteString+" "+periodString;
+		return timeString;
+	}
+	
+	public String getDateString()
+	{
+		String[] months= {"January", "February", "March", "April", "May", "June", "July","August",
+				"September", "October", "November", "December"};
+		String monthString=months[this.month];
+		String dayString=String.valueOf(this.day);
+		String dateString=monthString+", "+dayString;
+		return dateString;
+	}
 }

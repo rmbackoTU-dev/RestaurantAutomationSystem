@@ -14,6 +14,7 @@ import restaurantAutomationSystem.controllers.billing.CreditCardBilling;
 import restaurantAutomationSystem.controllers.billing.CreditCardPayment;
 import restaurantAutomationSystem.controllers.billing.PaymentStrategy;
 import restaurantAutomationSystem.model.ObservableTime;
+import restaurantAutomationSystem.model.RestaurantClock;
 
 public class Aggregator {
 	
@@ -24,7 +25,7 @@ public class Aggregator {
 	private ObservableTime time;
 	private  Map<Integer, Integer> tabPaymentRecordMap;
 	private PaymentStrategy[] payments;
-	private static final int DEFAULT_MAX_TABS=50;
+	public static final int DEFAULT_MAX_TABS=50;
 	private int tablesAvailable=10;
 	private String[] paymentTypes;
 	private int maximumMenus;
@@ -121,9 +122,9 @@ public class Aggregator {
 		}
 	}
 	
-	public Menu[] getAllMenus()
+	public MenuEvent[] getAllEvents()
 	{
-		return this.allMenus;
+		return this.events;
 	}
 	
 	
@@ -134,9 +135,9 @@ public class Aggregator {
 	}
 	
 	
-	public void addTab(Tab tab)
+	public int addTab(Tab tab)
 	{
-		int index=0;
+		int index=-1;
 		//find the first empty index and set the index to place
 		//the new subscriber in that place
 		if(tablesAvailable > 0)
@@ -152,14 +153,19 @@ public class Aggregator {
 		{
 			System.err.println("No tables are available");
 		}
+		return index;
 	}
 	
 	public void removeTab(int tabIndex)
-	throws IllegalArgumentException
+	throws IllegalArgumentException, NullPointerException
 	{
 		if(tabIndex < 0 || tabIndex >DEFAULT_MAX_TABS)
 		{
 			throw new IllegalArgumentException("Not a valid tab Index");
+		}
+		else if(this.tabs[tabIndex] == null)
+		{
+			throw new NullPointerException("Tab does not exist in list");
 		}
 		else
 		{
@@ -196,6 +202,7 @@ public class Aggregator {
 	}
 	
 	
+	
 	public int setCashPayment(int tabIndex, BigDecimal amount)
 	{
 		Random uidGenerator=new Random();
@@ -218,17 +225,14 @@ public class Aggregator {
 		return uid;
 	}
 	
-	public void setCardPayment(int tabIndex, String accountNum, String provider, String token, LocalDate date, BigDecimal amount, BigDecimal chargeLimit )
+	public void setCardPayment(int tabIndex, String accountNum, String provider, String token, String date, BigDecimal amount, BigDecimal chargeLimit )
 	{
 		CreditCardPayment payment=CreditCardPayment.creditCardPaymentFactory();
 		HashMap<String,String> paymentParams=new HashMap<String, String>();
-		Integer expireMonth=date.getMonthValue();
-		Integer expireYear=date.getYear();
-		String expirationString=expireMonth.toString()+"-"+expireYear.toString();
 		paymentParams.put("Account-Number", accountNum);
 		paymentParams.put("Payment-Provider", provider);
 		paymentParams.put("Security-Token", token);
-		paymentParams.put("Expiration-Date", expirationString);
+		paymentParams.put("Expiration-Date", date);
 		paymentParams.put("Cash-Amount", amount.toPlainString());
 		paymentParams.put("Charge-Limit", chargeLimit.toPlainString());
 		payment.addPaymentData(paymentParams);

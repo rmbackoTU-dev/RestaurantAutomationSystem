@@ -6,16 +6,17 @@ import restaurantAutomationSystem.model.restaurantData.Menu;
 
 public class GetMenuCommand implements RestaurantCommandInterface {
 
-	private Menu restaurantMenu;
+	private Aggregator data;
 	
 	public GetMenuCommand(Aggregator systemData)
 	{
-		this.restaurantMenu=systemData.getCurrentMenu();
+		this.data=systemData;
 	}
 	
 	public Object execute() throws CommandErrorException
 	{
-		return this.restaurantMenu;
+		Menu currentMenu=this.data.getCurrentMenu();
+		return currentMenu;
 	}
 
 }

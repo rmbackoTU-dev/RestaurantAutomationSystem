@@ -48,13 +48,6 @@ public class PlaceOrderCommand implements RestaurantCommandInterface {
 		//with the data
 		try
 		{
-			/**TODO:
-			 *   *Grab the current Tab from system data
-			 *   *perform find order index
-			 *   *get Order
-			 *   *add OrderItem to order
-			 *   *otherwise create new order and add order to tab
-			 */
 			if(this.orderNumberToUse != -1)
 			{
 				tabToAddOrder.addOrder(this.orderData);

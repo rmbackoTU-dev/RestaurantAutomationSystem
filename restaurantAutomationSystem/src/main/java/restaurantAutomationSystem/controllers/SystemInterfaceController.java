@@ -1,6 +1,7 @@
 package restaurantAutomationSystem.controllers;
 
 import restaurantAutomationSystem.commandInvokers.exceptions.CommandErrorException;
+import restaurantAutomationSystem.model.RestaurantClock;
 import restaurantAutomationSystem.model.restaurantData.Aggregator;
 import restaurantAutomationSystem.model.restaurantData.Menu;
 import restaurantAutomationSystem.model.restaurantData.MenuData;
@@ -9,6 +10,14 @@ import restaurantAutomationSystem.model.restaurantData.MenuItem;
 import restaurantAutomationSystem.model.restaurantData.Order;
 import restaurantAutomationSystem.model.restaurantData.OrderItem;
 import restaurantAutomationSystem.model.restaurantData.Tab;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
+
 import restaurantAutomationSystem.commandInvokers.Invoker;
 
 public class SystemInterfaceController {
@@ -108,10 +117,185 @@ public class SystemInterfaceController {
 	  }
 
 
-	  public static String getMenu(){
+	  public static String getMenu()
+	  {
 	      Menu menu;
-	      menu = invoker.getMenu();
-	      return menu.toString();
+	      String resultString;
+	      try
+	      {
+	    	  menu = invoker.getMenu();
+	    	  resultString=menu.toString();
+	      }
+	      catch(IllegalStateException ise)
+	      {
+	    	  resultString=ise.getMessage();
+	      }
+	      return resultString;
+	  }
+	  
+	  public static String getAllMenus()
+	  {
+		  HashMap<RestaurantClock, Menu> menuTimes;
+		  String allMenusString="";
+		  menuTimes=(HashMap) invoker.getAllMenusWithTime();
+		  Set timeKeySet=menuTimes.keySet();
+		  Iterator timeIter=timeKeySet.iterator();
+		  LocalDate today=LocalDate.now();
+		  RestaurantClock todaysDate=new RestaurantClock();
+		  todaysDate.setMonth(today.getMonthValue());
+		  todaysDate.setDay(today.getDayOfMonth());
+		  RestaurantClock currentClock;
+		  allMenusString=todaysDate.getDateString()+"\n";
+		  Menu currentMenu;
+		  while(timeIter.hasNext())
+		  {
+			  currentClock=(RestaurantClock) timeIter.next();
+			  allMenusString=allMenusString+currentClock.getTimeString()+"\n\n\n";
+			  currentMenu=menuTimes.get(currentClock);
+			  allMenusString=allMenusString+currentMenu.toString();
+		  }
+		  return null;
+	  }
+	  
+	  public static String payBill(String tabIndex, String token)
+	  {
+		  Boolean success=false;
+		  Integer index=Integer.getInteger(tabIndex);
+		  String successString;
+		  try
+		  {
+			  success=invoker.payBill(index, token);
+		  }
+		  catch(IllegalStateException ise)
+		  {
+			  successString=ise.getMessage();
+		  }
+		  if(success)
+		  {
+			  successString="Bill was paid successfully. Thank you, have a wonderful day";
+		  }
+		  else
+		  {
+			  successString="Bill payment unsuccessful. Please check your payment and try again";
+		  }
+		  
+		  return successString;
+	  }
+	  
+	  public static String openTab()
+	  {
+		  Tab newTab=new Tab();
+		  String successString;
+		  int tabNumber=-1;
+		  try
+		  {
+		  	tabNumber=invoker.openNewTab(newTab);
+		  }
+		  catch(IllegalStateException ise)
+		  {
+			  successString=ise.getMessage();
+		  }
+		  
+		  if(tabNumber != -1)
+		  {
+			  successString="The a new tab was added. "+tabNumber+" is your tab number keep track "+
+					  "of this for when you place a new order";
+		  }
+		  else
+		  {
+			  successString="Your tab was not successfully added, "+
+					  "we may be a little busy right now please try again later";
+					  
+		  }
+		  return successString;
+	  }
+	  
+	  public static String addCardPayment(String tabIndex,
+			  String accountNumber,
+			  String providerPayment,
+			  String securityToken,
+			  String expirationMonth,
+			  String expirationYear,
+			  String cashAmount,
+			  String chargeLimit)
+	  {
+		  Integer index=Integer.valueOf(tabIndex);
+		  Integer month=Integer.valueOf(expirationMonth);
+		  Integer year=Integer.valueOf(expirationYear);
+		  String successString;
+		  Boolean success=false;
+		  try
+		  {
+			  success=invoker.addCreditCardPayment(index, accountNumber, providerPayment,
+					  securityToken, month, year, cashAmount, chargeLimit);
+		  }
+		  catch(IllegalStateException ise)
+		  {
+			  successString=ise.getMessage();
+		  }
+		  
+		  if(success)
+		  {
+			  successString="Successfully added $"+cashAmount+" to your balance";
+		  }
+		  else
+		  {
+			  successString="Failed to add a credit card to your balance";
+		  }
+		  return successString;
+
+	  }
+	  
+	  public static String addCashPayment(String tabIndex,
+			  String amount)
+	  {
+		  Integer index=Integer.valueOf(tabIndex);
+		  BigDecimal cashAmount=new BigDecimal(amount);
+		  cashAmount=cashAmount.setScale(2, RoundingMode.CEILING);
+		  String successString;
+		  Boolean success=false;
+		  try
+		  {
+			  success=invoker.addCashPayment(index, cashAmount);
+		  }
+		  catch(IllegalStateException ise)
+		  {
+			  successString=ise.getMessage();
+		  }
+		  if(success)
+		  {
+			  successString="Successfully added $"+amount+" to your balance";
+		  }
+		  else
+		  {
+			  successString="Failed to add cash to your balance";
+		  }
+		  return successString;
+	  }
+	  
+	  public static String removeOrder(String tabIndex, String orderIndex)
+	  {
+		  Integer tIndex=Integer.valueOf(tabIndex);
+		  Integer oIndex=Integer.valueOf(orderIndex);
+		  String successString;
+		  Boolean success=false;
+		  try
+		  {
+			  success=invoker.removeOrder(tIndex, oIndex);
+		  }
+		  catch(IllegalStateException ise)
+		  {
+			  successString=ise.getMessage();
+		  }
+		  if(success)
+		  {
+			  successString="Successfully removed order "+orderIndex+" from your tab";
+		  }
+		  else
+		  {
+			  successString="Failed to remove order "+orderIndex+" from your tab";
+		  }
+		  return successString;
 	  }
 
 	  public static String placeOrder(String item, int quantity, int tabIndex, int orderNum)
@@ -145,9 +329,19 @@ public class SystemInterfaceController {
 	  }
 
 
-	  public static String getTab(int tabIndex){
+	  public static String getTab(int tabIndex)
+	  {
 	    Tab tab;
-	    tab = invoker.getTab(tabIndex);
-	    return tab.toString();
+	    String successString;
+	    try
+	    {
+	    	tab = invoker.getTab(tabIndex);
+	    	successString=tab.toString();
+	    }
+	    catch(IllegalStateException ise)
+	    {
+	    	successString=ise.getMessage();
+	    }
+	    return successString;
 	  };
 }
