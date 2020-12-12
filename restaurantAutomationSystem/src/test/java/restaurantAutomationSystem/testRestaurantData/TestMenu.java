@@ -139,8 +139,6 @@ public class TestMenu {
 		aMenuIterator.next();
 		this.testMenu.deleteMenuItem(aMenuIterator);
 		MenuItem currentItem=(MenuItem) aMenuIterator.next();
-		Assertions.assertEquals("Rice", currentItem.getDescription());
-		currentItem=(MenuItem) aMenuIterator.next();
 		Assertions.assertEquals("Bananas", currentItem.getDescription());
 	}
 	
@@ -223,67 +221,40 @@ public class TestMenu {
         this.testMenu.addMenuItem(testTen);
         this.testMenu.addMenuItem(testEleven);
 		String MenuHeader="\t\tMENU\t\t\n\n\n";
-		String AppetizerHeader="Appetizers: \n\n\n";
-		String MainDishHeader="\nMain Dishes: \n\n\n";
-		String DessertHeader="\nDesserts: \n\n\n";
-		String DrinkHeader="\nDrinks: \n\n\n";
-		String[] AppetizerString=
+		String[] itemStrings=
 			{
-					"\t1: Wings\n"
-					+ "$5.99\n\n",
-					"\t2: Jalapeno Poppers\n"
-					+"$4.99\n\n"
-			};
-		String[] MainDishString=
-			{
-					"\t3: Pizza\n"
-					+"$10.99\n\n",
-					"\t4: Cheese Burger\n"
-					+"$8.99\n\n",
-					"\t6: Burger\n"
-					+"$7.99\n\n"
-			};
-		String[] DessertString=
-			{
-					"\t5: Bananas\n"
+					"\t\t1: Wings\n"
+					+ "$5.99\n",
+					"\t\t2: Jalapeno Poppers\n"
+					+"$4.99\n",
+					"\t\t3: Pizza\n"
+					+"$10.99\n",
+					"\t\t4: Cheese Burger\n"
+					+"$8.99\n",
+					"\t\t5: Bananas\n"
 					+"( Heart Healthy )\n"
-					+"$1.00\n\n",
-					"\t7: Apple Pie\n"
-					+"$3.99\n\n",
-					"\t9: Ice Cream Sundae\n"
-					+"$5.99\n\n"
-			};
-		String[] DrinkString=
-			{
-					"\t8: Coke\n"
-					+"$1.99\n\n",
-					"\t10: Pepsi\n"
-					+"$1.99\n\n",
-					"\t11: Water\n"
+					+"$1.00\n",
+					"\t\t6: Burger\n"
+					+"$7.99\n",
+					"\t\t7: Apple Pie\n"
+					+"$3.99\n",
+					"\t\t8: Coke\n"
+					+"$1.99\n",
+					"\t\t9: Ice Cream Sundae\n"
+					+"$5.99\n",
+					"\t\t10: Pepsi\n"
+					+"$1.99\n",
+					"\t\t11: Water\n"
 					+"( Heart Healthy )\n"
-					+"$0.50\n\n"
+					+"$0.50\n"
+					
 			};
 		String expectedString=MenuHeader;
-		expectedString=expectedString+AppetizerHeader;
-		for(int i=0; i< AppetizerString.length; i++)
+		for(int i=0; i< itemStrings.length; i++)
 		{
-			expectedString=expectedString+AppetizerString[i];
+			expectedString=expectedString+itemStrings[i];
 		}
-		expectedString=expectedString+MainDishHeader;
-		for(int j=0; j< MainDishString.length; j++)
-		{
-			expectedString=expectedString+MainDishString[j];
-		}
-		expectedString=expectedString+DessertHeader;
-		for(int k=0; k< MainDishString.length; k++)
-		{
-			expectedString=expectedString+DessertString[k];
-		}
-		expectedString=expectedString+DrinkHeader;
-		for(int l=0; l< MainDishString.length; l++)
-		{
-			expectedString=expectedString+DrinkString[l];
-		}
+		
 		String actualString=testMenu.toString();
 		Assertions.assertEquals(expectedString, actualString);
 	}

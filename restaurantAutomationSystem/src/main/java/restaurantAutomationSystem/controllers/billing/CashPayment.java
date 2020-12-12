@@ -71,12 +71,12 @@ public class CashPayment implements PaymentStrategy {
 			throw new IllegalArgumentException("A field may have been given multiple times,"
 					+ " and the other not at all");
 		}
-		this.writeNewRecord(this.lastRecord, userID, cashAmount);
+		this.writeNewRecord(lastRecord, userID, cashAmount);
 	}
 
 	public int recordNumForLastRecordAdded()
 	{
-		return this.lastRecord;
+		return lastRecord;
 	}
 	
 	private void writeNewRecord(int recordNum, String id, String amount)
@@ -127,7 +127,7 @@ public class CashPayment implements PaymentStrategy {
 					keyValue=line.split(":");
 					if(keyValue[0] == "Record-Number")
 					{
-						this.lastRecord=Integer.parseInt(keyValue[1]);
+						lastRecord=Integer.parseInt(keyValue[1]);
 						this.recordStartLocations.add(this.numbersOfCharacter-keyValue.length);
 					}					
 				}

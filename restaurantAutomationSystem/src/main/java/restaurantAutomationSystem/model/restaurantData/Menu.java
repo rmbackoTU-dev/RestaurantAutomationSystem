@@ -5,19 +5,11 @@ public class Menu implements MenuData {
 	private MenuItem[] menuList;
 	private int menuSize=10;
 	private int firstEmptyIndex=0;
-//	private String[] menuCategories;
-//	private int menuCategorySize;
 	
 	
 	public Menu()
 	{
 		menuList=new MenuItem[menuSize];
-//		menuCategorySize=4;
-//		menuCategories=new String[menuCategorySize];
-//		menuCategories[0]="Appetizers";
-//		menuCategories[1]="Main Dish";
-//		menuCategories[2]="Dessert";
-//		menuCategories[3]="Drinks";
 	}
 	
 	public Menu(int menuSize)
@@ -29,12 +21,6 @@ public class Menu implements MenuData {
 		}
 		this.menuSize=menuSize;
 		menuList=new MenuItem[menuSize];
-//		menuCategorySize=4;
-//		menuCategories=new String[menuCategorySize];
-//		menuCategories[0]="Appetizers";
-//		menuCategories[1]="Main Dish";
-//		menuCategories[2]="Dessert";
-//		menuCategories[3]="Drinks";
 	}
 	
 	/**
@@ -64,38 +50,8 @@ public class Menu implements MenuData {
 				this.firstEmptyIndex=this.firstEmptyIndex+1;
 			}
 		}
-		
-//		if(menuToCopy.getMenuCategorySize() == 0)
-//		{
-//			this.menuCategorySize=0;
-//			this.menuCategories=new String[menuCategorySize];
-//		}
-//		else
-//		{
-//			String[] tempMenuCategories=menuToCopy.getCategories();
-//			this.menuCategorySize=menuToCopy.getMenuCategorySize();
-//			for(int i=0; i < menuToCopy.getMenuCategorySize(); i++)
-//			{
-//				this.menuCategories[i]=tempMenuCategories[i];
-//			}
-//		}
 	}
-	
-//	public int getMenuCategorySize()
-//	{
-//		return this.menuCategorySize;
-//	}
-//	
-//	public String[] getCategories()
-//	{
-//		return this.menuCategories;
-//	}
-//	
-//	public void setCategories(String[] categories)
-//	{
-//		this.menuCategories=categories;
-//		this.menuSize=categories.length;
-//	}
+		
 	
 	
 	public int size()

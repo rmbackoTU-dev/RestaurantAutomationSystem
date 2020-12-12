@@ -157,14 +157,13 @@ public class SystemInterfaceController {
 		  return null;
 	  }
 	  
-	  public static String payBill(String tabIndex, String token)
+	  public static String payBill(int tabIndex, String token)
 	  {
 		  Boolean success=false;
-		  Integer index=Integer.getInteger(tabIndex);
 		  String successString;
 		  try
 		  {
-			  success=invoker.payBill(index, token);
+			  success=invoker.payBill(tabIndex, token);
 		  }
 		  catch(IllegalStateException ise)
 		  {
@@ -210,7 +209,7 @@ public class SystemInterfaceController {
 		  return successString;
 	  }
 	  
-	  public static String addCardPayment(String tabIndex,
+	  public static String addCardPayment(int tabIndex,
 			  String accountNumber,
 			  String providerPayment,
 			  String securityToken,
@@ -219,14 +218,13 @@ public class SystemInterfaceController {
 			  String cashAmount,
 			  String chargeLimit)
 	  {
-		  Integer index=Integer.valueOf(tabIndex);
 		  Integer month=Integer.valueOf(expirationMonth);
 		  Integer year=Integer.valueOf(expirationYear);
 		  String successString;
 		  Boolean success=false;
 		  try
 		  {
-			  success=invoker.addCreditCardPayment(index, accountNumber, providerPayment,
+			  success=invoker.addCreditCardPayment(tabIndex, accountNumber, providerPayment,
 					  securityToken, month, year, cashAmount, chargeLimit);
 		  }
 		  catch(IllegalStateException ise)
@@ -246,17 +244,16 @@ public class SystemInterfaceController {
 
 	  }
 	  
-	  public static String addCashPayment(String tabIndex,
+	  public static String addCashPayment(int tabIndex,
 			  String amount)
 	  {
-		  Integer index=Integer.valueOf(tabIndex);
 		  BigDecimal cashAmount=new BigDecimal(amount);
 		  cashAmount=cashAmount.setScale(2, RoundingMode.CEILING);
 		  String successString;
 		  Boolean success=false;
 		  try
 		  {
-			  success=invoker.addCashPayment(index, cashAmount);
+			  success=invoker.addCashPayment(tabIndex, cashAmount);
 		  }
 		  catch(IllegalStateException ise)
 		  {
@@ -273,15 +270,13 @@ public class SystemInterfaceController {
 		  return successString;
 	  }
 	  
-	  public static String removeOrder(String tabIndex, String orderIndex)
+	  public static String removeOrder(int tabIndex, int orderIndex)
 	  {
-		  Integer tIndex=Integer.valueOf(tabIndex);
-		  Integer oIndex=Integer.valueOf(orderIndex);
 		  String successString;
 		  Boolean success=false;
 		  try
 		  {
-			  success=invoker.removeOrder(tIndex, oIndex);
+			  success=invoker.removeOrder(tabIndex, orderIndex);
 		  }
 		  catch(IllegalStateException ise)
 		  {

@@ -25,7 +25,7 @@ public class AddCreditCardPaymentCommand implements RestaurantCommandInterface {
 	
 	public AddCreditCardPaymentCommand(Aggregator systemData, int tabIndex,
 			String accountNum, String provider, String token, String expiration,
-			String limit, String amount)
+			String amount, String limit)
 	{
 		this.data=systemData;
 		this.tabNumber=tabIndex;

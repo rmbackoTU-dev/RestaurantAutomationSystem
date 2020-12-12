@@ -1,10 +1,5 @@
 package restaurantAutomationSystem.model.restaurantData;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.LinkedList;
-
 class HeartHealthyIterator implements RestaurantIterator {
 	private RestaurantIterator allItemIterator;
 	private MenuItem currentItem;
@@ -17,22 +12,6 @@ class HeartHealthyIterator implements RestaurantIterator {
 		this.allItemIterator=currentMenu.getAllItemsIterator();
 		this.currentIndex=-1;
 		this.currentItem=null;
-//		MenuItem tempItem;
-//		boolean foundFirst=false;
-//		while(allItemIterator.hasNext() && !foundFirst)
-//		{
-//				tempItem=(MenuItem) this.allItemIterator.next();
-//				if((tempItem.isHeartHealthy() == heartHealth))
-//				{
-//					this.currentItem=tempItem;
-//					this.currentIndex=this.allItemIterator.getCurrentIndex();
-//					foundFirst=true;
-//				}
-//		}
-//		if(currentItem == null)
-//		{
-//				throw new IllegalStateException("current Item Is Not Set");
-//		}	
 	}
 		
 	

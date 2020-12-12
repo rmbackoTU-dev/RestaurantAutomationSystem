@@ -21,33 +21,6 @@ class PriceIterator implements RestaurantIterator {
 		this.bigDecimalPrice=this.bigDecimalPrice.setScale(2, RoundingMode.CEILING);
 		currentIndex=-1;
 		currentItem=null;
-		
-//		boolean foundFirst=false;
-//		if(allItemIterator.getItem().getPrice().equals(this.bigDecimalPrice))
-//		{
-//			this.currentItem=allItemIterator.getItem();
-//			this.currentIndex=this.allItemIterator.getCurrentIndex();
-//		}
-//		else
-//		{
-//			while(allItemIterator.hasNext() && !foundFirst )
-//			{
-//				if(allItemIterator.getItem().getPrice().equals(this.bigDecimalPrice))
-//				{
-//						this.currentItem=allItemIterator.getItem();
-//						this.currentIndex=this.allItemIterator.getCurrentIndex();
-//						foundFirst=true;
-//				}
-//				else
-//				{
-//					allItemIterator.next();
-//				}
-//			}
-//		}
-//		if(this.currentItem == null)
-//		{
-//			throw new IllegalStateException("current Item Is Not Set");
-//		}
 	}
 		
 	

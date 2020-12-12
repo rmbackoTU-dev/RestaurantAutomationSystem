@@ -7,7 +7,7 @@ import restaurantAutomationSystem.controllers.SystemInterfaceController;
 public class UserInterface {
 
   //private SystemInterface systemInterface;
-  Scanner cmdScanner;
+  private Scanner cmdScanner;
 
   public UserInterface (){
     //systemInterface = SystemInterface.getSystemInterface();
@@ -30,7 +30,8 @@ public class UserInterface {
     		" 6 to view the tab\n"+
     		"7 to split the tab\n"+
     		"8 to pay the bill\n"
-    		+ " 9 to exit");
+    		+ " 9 to remove an order\n"
+    		+" 10 to exit");
 
     String item = new String();
     int selection = cmdScanner.nextInt();
@@ -48,15 +49,17 @@ public class UserInterface {
 	  }
 	  else if(selection == 4)
 	  {  
+		System.out.println("Enter in the tab number you would like to use this payment for");
+		int tabIndex=this.cmdScanner.nextInt();
         String[] paymentParams=this.getPaymentInformation();
         String paymentType=paymentParams[0];
         if(paymentType == "Cash")
         {
-        	screen_lines=SystemInterfaceController.addCashPayment(paymentParams[1], paymentParams[2]);
+        	screen_lines=SystemInterfaceController.addCashPayment(tabIndex, paymentParams[2]);
         }
         else if(paymentType =="Credit Card")
         {
-        	screen_lines=SystemInterfaceController.addCardPayment(paymentParams[1], paymentParams[2],
+        	screen_lines=SystemInterfaceController.addCardPayment(tabIndex , paymentParams[2],
         			paymentParams[3], paymentParams[4], paymentParams[5] , paymentParams[6 ], 
         			paymentParams[7], paymentParams[8]);
         }
@@ -86,17 +89,25 @@ public class UserInterface {
 	  {
 		  System.out.println("Please enter the tab of the bill you want to pay");
 		  int tabIndex=this.cmdScanner.nextInt();
-		  String tabIndexString=Integer.toString(tabIndex);
 		  System.out.println("Please enter the security token for your payment ");
 		  String token=this.cmdScanner.nextLine();
-		  screen_lines=SystemInterfaceController.payBill(tabIndexString, token);
+		  screen_lines=SystemInterfaceController.payBill(tabIndex, token);
 	  }
 	  else if(selection == 9)
+	  {
+		  System.out.println("Please enter the tab you would like to remove the order from");
+		  int tabIndex=this.cmdScanner.nextInt();
+		  System.out.println("Please enter the order number of the order you would like to"
+		  		+ " remove");
+		  int orderNum=this.cmdScanner.nextInt();
+		  screen_lines=SystemInterfaceController.removeOrder(tabIndex, orderNum);
+	  }
+	  else if(selection == 10)
 	  {
 		  screen_lines="Exiting \n";
 		  loopVar=false;
 	  }
-	  else if(selection == 10)
+	  else if(selection == 11)
 	  {
 		   screen_lines="Error 10 is not a valid option select another option";
 	  }
@@ -121,39 +132,33 @@ public class UserInterface {
 		  if(paymentChoice == 1)
 		  {
 			  valid= true;
-			  params=new String[3];
+			  params=new String[2];
 			  params[0]="Cash";
-			  System.out.println("Please enter in your tab number: ");
-			  int tabIndex=this.cmdScanner.nextInt();
-			  params[1]=Integer.toString(tabIndex);
 			  System.out.println("Please enter in the amount of cash you are adding: ");
-			  params[2]=this.cmdScanner.nextLine();
+			  params[1]=this.cmdScanner.nextLine();
 		  }
 		  else if(paymentChoice == 2)
 		  {
 			  valid =true;
-			  params=new String[9];
+			  params=new String[8];
 			  params[0]="Credit Card";
-			  System.out.println("Please enter in your tab number: ");
-			  int tabIndex=this.cmdScanner.nextInt();
-			  params[1]=Integer.toString(tabIndex);
 			  System.out.println("Please enter in your cards account number: ");
-			  params[2]=this.cmdScanner.nextLine();
+			  params[1]=this.cmdScanner.nextLine();
 			  System.out.println("Please enter in your card provider: ");
-			  params[3]=this.cmdScanner.nextLine();
+			  params[2]=this.cmdScanner.nextLine();
 			  System.out.println("Please enter in your security token from your card"+
 			       "(Remember this you will need it later): ");
-			  params[4]=this.cmdScanner.nextLine();
+			  params[3]=this.cmdScanner.nextLine();
 			  System.out.println("Please enter the expiration Month on the card");
-			  params[5]=Integer.toString(this.cmdScanner.nextInt());
+			  params[4]=Integer.toString(this.cmdScanner.nextInt());
 			  System.out.println("Please enter the expiration Year on the card");
-			  params[6]=Integer.toString(this.cmdScanner.nextInt());
+			  params[5]=Integer.toString(this.cmdScanner.nextInt());
 			  System.out.println("Please enter the amount available on the card in the format DD.CC "+
 			  "where D is US Dollars, and C is US Cents");
-			  params[7]=this.cmdScanner.nextLine();
+			  params[6]=this.cmdScanner.nextLine();
 			  System.out.println("Please enter the charge limit on your credit card in the format DD.CC "+
 			  " where D is US Dollars, and C is US Cents");  
-			  params[8]=this.cmdScanner.nextLine();
+			  params[7]=this.cmdScanner.nextLine();
 		  }
 		  else
 		  {
