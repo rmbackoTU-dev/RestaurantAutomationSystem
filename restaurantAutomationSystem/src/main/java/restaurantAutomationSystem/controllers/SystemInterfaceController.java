@@ -344,4 +344,24 @@ public class SystemInterfaceController {
 	    }
 	    return successString;
 	  };
+	  
+	  public static String splitTab(int tabIndex)
+	  {
+		  int[] indexes;
+		  String successString;
+		  try
+		  {
+			  indexes=invoker.splitTab(tabIndex);
+			  successString="You new tabs, tab numbers are : ";
+			  for(int i=0; i< indexes.length; i++)
+			  {
+				  successString=successString+" "+indexes[i];
+			  }
+		  }
+		  catch(IllegalStateException ise)
+		  {
+			  successString=ise.getMessage();
+		  }
+		  return successString;
+	  }
 }
