@@ -19,7 +19,7 @@ import restaurantAutomationSystem.model.RestaurantClock;
 public class Aggregator {
 	
 	private Menu[] allMenus;
-	private MenuManager menu;
+	private MenuManager manager;
 	private MenuEvent[] events;
 	private Tab[] tabs;
 	private ObservableTime time;
@@ -83,15 +83,38 @@ public class Aggregator {
 		//Start of Menu Construction logic
 		this.maximumMenus=3;
 		this.allMenus=new Menu[this.maximumMenus];
-		this.menu=new MenuManager();
 		this.events=new MenuEvent[this.maximumMenus];
-		this.time=new ObservableTime();
-		this.time.register(this.menu);
+		this.time=new ObservableTime(LocalTime.now(), LocalDate.now());
+
 		//end of menu construction logic
 		
 		this.tabs=new Tab[DEFAULT_MAX_TABS];
 		this.tabPaymentRecordMap=new HashMap<Integer, Integer>();
 		this.paymentTypes=new String[DEFAULT_MAX_TABS];
+	}
+	
+	
+	public Aggregator(int numberOfMenus)
+	{
+		this.maximumMenus=numberOfMenus;
+		this.allMenus=new Menu[this.maximumMenus];
+		this.events=new MenuEvent[this.maximumMenus];
+		this.time=new ObservableTime(LocalTime.now(), LocalDate.now());
+	}
+	
+	public void setMenuManager(MenuManager manager)
+	{
+		if(this.manager == null)
+		{
+			this.manager=manager;
+			this.time.register(this.manager);
+		}
+		else
+		{
+			this.time.unregister(this.manager);
+			this.manager=manager;
+			this.time.register(this.manager);
+		}
 	}
 	
 	
@@ -105,22 +128,34 @@ public class Aggregator {
 		this.time.setDate(date);
 	}
 	
+	/**
+	 * Adds a event to the menu and sets the events menu to the current menu
+	 * @param event
+	 * @throws IllegalStateException
+	 */
 	public void addMenuEvent (MenuEvent event)
 	throws IllegalStateException
 	{
+		if(this.manager == null)
+		{
+			throw new IllegalStateException("Set the Menu Manager first");
+		}
 		menusAdded=menusAdded+1;
 		if(menusAdded < this.maximumMenus)
 		{
 			this.events[menusAdded]=event;
-			this.menu.registerMenuEvent(event);
+			this.manager.registerMenuEvent(event);
 			MenuData menu=event.getAvailableMenu();
 			this.allMenus[menusAdded]=(Menu) menu;
+			this.manager.setAvailableMenu(event.getAvailableMenu());
 		}
 		else
 		{
 			throw new IllegalStateException("Exceeded the maximum number of menus for this aggregator");
 		}
 	}
+	
+	
 	
 	public MenuEvent[] getAllEvents()
 	{
@@ -130,7 +165,7 @@ public class Aggregator {
 	
 	public Menu getCurrentMenu()
 	{
-		Menu currentMenu=(Menu) this.menu.getAvailableMenu();
+		Menu currentMenu=(Menu) this.manager.getAvailableMenu();
 		return currentMenu;
 	}
 	

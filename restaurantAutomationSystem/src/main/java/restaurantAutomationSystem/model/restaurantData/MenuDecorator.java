@@ -45,6 +45,11 @@ public abstract class MenuDecorator implements MenuData {
 		}
 		
 	}
+
+	public int getMenuId()
+	{
+		return this.baseMenu.getMenuId();
+	}
 	
 	public Menu getMenu()
 	{

@@ -20,8 +20,8 @@ public class MenuEvent {
 	public MenuEvent()
 	{
 		this.clock=new RestaurantClock();
-		this.manager=new MenuManager();
-		availableMenu=this.manager.getAvailableMenu();
+		this.manager=null;
+		availableMenu=null;
 	}
 	
 	
@@ -33,7 +33,18 @@ public class MenuEvent {
 	{
 		this.clock=new RestaurantClock();
 		this.manager=manager;
-		availableMenu=new Menu((Menu)aMenu);
+		this.availableMenu=aMenu;
+	}
+	
+	/**
+	 * Parameter Constructor
+	 * @param aMenu
+	 */
+	public MenuEvent(MenuData aMenu)
+	{
+		this.clock=new RestaurantClock();
+		this.manager=null;
+		this.availableMenu=aMenu;
 	}
 	
 	/**
@@ -87,6 +98,24 @@ public class MenuEvent {
 		return this.availableMenu;
 	}
 	
+	public void setManager(MenuManager manager)
+	{
+		if(this.availableMenu != null)
+		{
+			this.manager=manager;
+			this.manager.setAvailableMenu(availableMenu);
+		}
+		else
+		{
+			throw new IllegalStateException("Set the menu for the event first");
+		}
+	}
+	
+	public void setMenu(MenuData menu)
+	{
+		this.availableMenu=menu;
+	}
+	
 	public boolean isEventTime(RestaurantClock time)
 	{
 		return ((time.getHour() == this.clock.getHour()) 
@@ -115,13 +144,15 @@ public class MenuEvent {
 	public void changeState()
 	throws IllegalStateException
 	{
-		int menuIdCurrent=0;
-		int menuIdOfEvent=0;
-		if(menuIdCurrent == menuIdOfEvent)
+		if(this.manager == null )
 		{
-			throw new IllegalStateException("No state change took place");
+			throw new IllegalStateException("Set the menu manager first");
 		}
-		else
+		int menuIdCurrent=this.manager.getAvailableMenu().getMenuId();
+		int menuIdOfEvent=this.availableMenu.getMenuId();
+		System.out.println("Menu ID Current: "+menuIdCurrent);
+		System.out.println("Events Menu Id: "+menuIdOfEvent);
+		if(menuIdCurrent != menuIdOfEvent)
 		{
 			if(!(this.manager == null))
 			{

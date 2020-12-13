@@ -10,6 +10,7 @@ public class ObservableTime implements Observable {
 
 	private Observer[] subscribers;
 	private RestaurantClock clock;
+	private static int numberOfSubscribers=0;
 	
 	public ObservableTime() 
 	{
@@ -36,16 +37,18 @@ public class ObservableTime implements Observable {
 		}
 		subscriber.setInstanceId(index);
 		this.subscribers[index]=subscriber;
+		this.numberOfSubscribers=this.numberOfSubscribers+1;
 	}
 
 	public void unregister(Observer subscriber) {
 		int indexToRemove=subscriber.getInstanceId();
 		this.subscribers[indexToRemove]=null;
+		this.numberOfSubscribers=this.numberOfSubscribers-1;
 	}
 
 	public void notifySubscribers() {
 		Observer subscriber;
-		for(int i=0; i< subscribers.length; i++)
+		for(int i=0; i< numberOfSubscribers; i++)
 		{
 			subscriber=this.subscribers[i];
 			subscriber.refreshData(this);
@@ -57,14 +60,20 @@ public class ObservableTime implements Observable {
 	{
 		this.clock.setMonth(date.getMonthValue());
 		this.clock.setDay(date.getDayOfMonth());
-		this.notifySubscribers();
+		if(numberOfSubscribers != 0)
+		{
+			this.notifySubscribers();
+		}
 	}
 	
 	public void setTime(LocalTime time)
 	{
 		this.clock.setHour(time.getHour());
 		this.clock.setMinute(time.getMinute());
-		this.notifySubscribers();
+		if(numberOfSubscribers !=0)
+		{
+			this.notifySubscribers();
+		}
 	}
 
 	public Object getObjectFromObservable() {

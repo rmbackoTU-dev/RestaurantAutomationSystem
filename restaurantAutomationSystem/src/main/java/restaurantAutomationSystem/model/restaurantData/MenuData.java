@@ -10,5 +10,7 @@ public interface MenuData {
 	
 	public String toString();
 	
+	public int getMenuId();
+	
 	
 }

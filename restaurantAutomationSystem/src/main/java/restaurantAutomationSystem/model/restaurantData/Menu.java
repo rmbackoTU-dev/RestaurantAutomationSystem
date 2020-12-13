@@ -5,11 +5,15 @@ public class Menu implements MenuData {
 	private MenuItem[] menuList;
 	private int menuSize=10;
 	private int firstEmptyIndex=0;
+	private static int menusCreated=0;
+	private int menuId;
 	
 	
 	public Menu()
 	{
 		menuList=new MenuItem[menuSize];
+		menusCreated=menusCreated+1;
+		this.menuId=menusCreated;
 	}
 	
 	public Menu(int menuSize)
@@ -21,6 +25,8 @@ public class Menu implements MenuData {
 		}
 		this.menuSize=menuSize;
 		menuList=new MenuItem[menuSize];
+		menusCreated=menusCreated+1;
+		this.menuId=menusCreated;
 	}
 	
 	/**
@@ -51,9 +57,15 @@ public class Menu implements MenuData {
 				this.firstEmptyIndex=this.firstEmptyIndex+1;
 			}
 		}
+		menusCreated=menusCreated+1;
+		this.menuId=menusCreated;
 	}
 		
 	
+	public int getMenuId()
+	{
+		return this.menuId;
+	}
 	
 	public int size()
 	{

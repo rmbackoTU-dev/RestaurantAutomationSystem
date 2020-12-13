@@ -54,7 +54,9 @@ public class MenuManager implements Observer {
 	
 	public void registerMenuEvent(MenuEvent event)
 	{
+		event.setManager(this);
 		events.add(event);
+		
 	}
 	
 	public void unregisterMenuEvent(int indexOfEvent)
