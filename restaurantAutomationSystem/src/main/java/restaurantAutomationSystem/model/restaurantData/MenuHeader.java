@@ -6,11 +6,25 @@ public class MenuHeader extends MenuDecorator {
 	
 	public MenuHeader()
 	{
+		super();
 		this.menuHeader="";
 	}
 	
 	public MenuHeader(String header)
 	{
+		super();
+		this.menuHeader=header;
+	}
+	
+	public MenuHeader(MenuData menu)
+	{
+		super(menu);
+		this.menuHeader="";
+	}
+	
+	public MenuHeader(MenuData menu, String header)
+	{
+		super(menu);
 		this.menuHeader=header;
 	}
 	

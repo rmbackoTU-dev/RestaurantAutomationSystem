@@ -8,6 +8,7 @@ public class CategoryHeaders extends MenuDecorator {
 	
 	public CategoryHeaders()
 	{
+		super();
 		this.categorySize=4;
 		this.categories=new String[4];
 		this.firstEmpty=0;
@@ -15,6 +16,15 @@ public class CategoryHeaders extends MenuDecorator {
 	
 	public CategoryHeaders(String[] categories)
 	{
+		super();
+		this.categories=categories;
+		this.categorySize=this.categories.length;
+		this.firstEmpty=categorySize+1;
+	}
+	
+	public CategoryHeaders(MenuData menu, String[] categories)
+	{
+		super(menu);
 		this.categories=categories;
 		this.categorySize=this.categories.length;
 		this.firstEmpty=categorySize+1;
@@ -111,7 +121,7 @@ public class CategoryHeaders extends MenuDecorator {
 			while(itemIter.hasNext())
 			{
 				currentItem=(MenuItem) itemIter.next();
-				menuString=menuString+"\t"+currentItem.toString()+"\n\n";
+				menuString=menuString+"\t\t"+currentItem.toString()+"\n\n";
 			}
 		}
 		return menuString;

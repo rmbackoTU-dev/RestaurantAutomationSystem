@@ -94,15 +94,15 @@ public class TestMenuItem {
 	public void getCategory()
 	{
 		MenuItem testAppetizer=new MenuItem("Grapes", 1, 10.99, 0, true);
-		Assertions.assertEquals(testAppetizer.getCategory(), "Appetizer");
+		Assertions.assertEquals(testAppetizer.getCategory(), 0);
         MenuItem testMainCourse=new MenuItem("Cheese Steak", 1, 10.99, 1, false);
-		Assertions.assertEquals(testMainCourse.getCategory(), "Main Dish");
+		Assertions.assertEquals(testMainCourse.getCategory(), 1);
 		MenuItem testDessert=new MenuItem("Cake", 1, 10.99, 2, false);
-		Assertions.assertEquals(testDessert.getCategory(), "Dessert");
+		Assertions.assertEquals(testDessert.getCategory(), 2);
         MenuItem testDrink=new MenuItem("Coke", 1, 10.99, 3, false);
-		Assertions.assertEquals(testDrink.getCategory(), "Drink");
+		Assertions.assertEquals(testDrink.getCategory(), 3);
 		MenuItem testInvalid=new MenuItem("N/A", 1, 10.99, 4, false);
-		Assertions.assertEquals(testInvalid.getCategory(), "Unknown Category");
+		Assertions.assertEquals(testInvalid.getCategory(), 4);
 
 	}
 }

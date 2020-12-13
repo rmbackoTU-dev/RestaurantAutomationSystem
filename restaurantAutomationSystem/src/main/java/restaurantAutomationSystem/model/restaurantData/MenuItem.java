@@ -69,14 +69,7 @@ public class MenuItem {
 	public int getCategory()
 	throws IllegalStateException
 	{
-		if(this.category < 4)
-		{
-			return this.category;
-		}
-		else
-		{
-			throw new IllegalStateException("The menu item is not set to a known category");
-		}
+		return this.category;
 	}
 	
 	

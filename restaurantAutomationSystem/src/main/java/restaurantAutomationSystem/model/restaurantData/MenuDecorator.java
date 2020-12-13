@@ -3,13 +3,15 @@ package restaurantAutomationSystem.model.restaurantData;
 public abstract class MenuDecorator implements MenuData {
 
 	private Menu baseMenu;
+	private MenuData menuWithAddons;
 	
 	/**
 	 * Default Constructor
 	 */
 	public MenuDecorator()
 	{
-		baseMenu=new Menu();
+		this.baseMenu=new Menu();
+		this.menuWithAddons=this.baseMenu;
 	}
 	
 	/**
@@ -17,15 +19,31 @@ public abstract class MenuDecorator implements MenuData {
 	 */
 	public MenuDecorator(int menuSize)
 	{
-		baseMenu=new Menu(menuSize);
+		this.baseMenu=new Menu(menuSize);
+		this.menuWithAddons=this.baseMenu;
 	}
 	
 	/**
 	 * Copy Constructor
 	 */
-	public MenuDecorator(Menu menuToCopy)
+	public MenuDecorator(MenuData menuToCopy)
 	{
-		baseMenu=new Menu(menuToCopy);
+		MenuDecorator decorator;
+		Menu menuData;
+		if(!(menuToCopy instanceof Menu))
+		{
+			decorator=(MenuDecorator) menuToCopy;
+			this.menuWithAddons=decorator;
+			menuData=decorator.getMenu();
+			this.baseMenu=menuData;
+		}
+		else
+		{
+			menuData=(Menu) menuToCopy;
+			this.baseMenu=menuData;
+			this.menuWithAddons=this.baseMenu;
+		}
+		
 	}
 	
 	public Menu getMenu()
@@ -36,7 +54,7 @@ public abstract class MenuDecorator implements MenuData {
 	@Override
 	public String toString()
 	{
-		return this.baseMenu.toString();
+		return this.menuWithAddons.toString();
 	}
 	
 	public void addMenuItem(MenuItem item)
@@ -54,10 +72,6 @@ public abstract class MenuDecorator implements MenuData {
 		return this.baseMenu.isOrderInMenu(orderNumber);
 	}
 	
-//	public void updateCategories(String[] categories)
-//	{
-//		this.baseMenu.setCategories(categories);
-//	}
 	
 	
 }

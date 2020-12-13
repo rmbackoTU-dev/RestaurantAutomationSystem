@@ -30,15 +30,16 @@ public class Menu implements MenuData {
 	 */
 	public Menu(Menu menuToCopy)
 	{
-		RestaurantIterator iterator=menuToCopy.getAllItemsIterator();
-		if(menuToCopy.size() == 0)
+		Menu copyMenu=menuToCopy;
+		RestaurantIterator iterator=copyMenu.getAllItemsIterator();
+		if(copyMenu.size() == 0)
 		{
 			this.menuList=new MenuItem[menuSize];
 		}
 		else
 		{
 			//double the size to add room for more
-			int copySize=menuToCopy.size()*2;
+			int copySize=copyMenu.size()*2;
 			this.menuList=new MenuItem[copySize];
 			MenuItem currentItem;
 			int currentIndex=0;

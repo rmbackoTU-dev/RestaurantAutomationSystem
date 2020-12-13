@@ -8,6 +8,7 @@ public class ItemOfTheDay extends MenuDecorator {
 	
 	public ItemOfTheDay()
 	{
+		super();
 		this.firstEmpty=0;
 		this.sizeOfList=5;
 		this.itemsOfTheDay=new MenuItem[5];
@@ -15,6 +16,23 @@ public class ItemOfTheDay extends MenuDecorator {
 	
 	public ItemOfTheDay(MenuItem[] items)
 	{
+		super();
+		this.firstEmpty=items.length+1;
+		this.sizeOfList=items.length;
+		this.itemsOfTheDay=items;
+	}
+	
+	public ItemOfTheDay(MenuData menu)
+	{
+		super(menu);
+		this.firstEmpty=0;
+		this.sizeOfList=5;
+		this.itemsOfTheDay=new MenuItem[5];
+	}
+	
+	public ItemOfTheDay(MenuData menu, MenuItem[] items)
+	{
+		super(menu);
 		this.firstEmpty=items.length+1;
 		this.sizeOfList=items.length;
 		this.itemsOfTheDay=items;
@@ -27,7 +45,7 @@ public class ItemOfTheDay extends MenuDecorator {
 		menuString=menuString+"\n\n Items of the Day \n\n";
 		for(int i=0; i< itemsOfTheDay.length; i++)
 		{
-			menuString=menuString+itemsOfTheDay[i].toString();
+			menuString=menuString+"\t\t"+itemsOfTheDay[i].toString()+"\n";
 		}
 		return menuString;		
 	}
@@ -42,7 +60,6 @@ public class ItemOfTheDay extends MenuDecorator {
 			tempCategories=new MenuItem[tempSize];
 			try
 			{
-				MenuItem anItem;
 				for(int i=0; i<this.sizeOfList; i++ )
 				{
 					tempCategories[i]=this.itemsOfTheDay[i];
@@ -70,10 +87,8 @@ public class ItemOfTheDay extends MenuDecorator {
 		{
 			throw new IllegalStateException("The item iterator is not set to a item");
 		}
-		boolean last;
 		if(indexOfItem == this.firstEmpty-1)
 		{
-			last=true;
 			this.firstEmpty=indexOfItem;
 			this.itemsOfTheDay[indexOfItem]=null;
 		}
